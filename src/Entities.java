@@ -1,8 +1,2 @@
-public class entitiy{
-    
-
-<<<<<<< HEAD
+public class Entities {
 }
-=======
-}
->>>>>>> a6b68b0474e571ec5487f43b9f9fdd6387a85ba4
