@@ -1,5 +1,5 @@
 public class Entity {
-    
+
     private Position position;
 
     public Position getPosition(){
