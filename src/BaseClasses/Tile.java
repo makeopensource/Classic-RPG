@@ -1,25 +1,27 @@
+package BaseClasses;
+
 import Entities.*;
 import java.util.*;
 
 public class Tile {
 
-    private ArrayList<Entity> ListofEntities;
+    private ArrayList<Entity> listOfEntities;
 
     public void setEntities(ArrayList<Entity> entities){
-        this.ListofEntities = entities;
+        this.listOfEntities = entities;
     }
 
     public ArrayList<Entity> getEntities(){
-        return this.ListofEntities;
+        return this.listOfEntities;
     }
 
 
     public Tile(ArrayList<Entity> entities){
-        this.ListofEntities = entities;
+        this.listOfEntities = entities;
     }
 
     public Tile(){
-        this.ListofEntities = new ArrayList<Entity>();
+        this.listOfEntities = new ArrayList<>();
     }
 
 }
