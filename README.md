@@ -12,3 +12,6 @@ Fetch:
   git fetch  
 Pull upstream:  
   git pull upstream <branchname>  
+## Creating Tests:  
+  To quickly create tests for a class, right click on the class name in intellij, click show context actions, and then click create test.  
+  Place the tests in an appropriately formatted folder.
