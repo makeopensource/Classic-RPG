@@ -16,6 +16,9 @@ public class Entity {
         this.position.set(position);
     }
 
+    public void setPosition(int x, int y){
+        this.position.setXY(x, y);
+    }
 
     //Constructor for using reference (equipped/held items)
     public Entity(Position position){   
@@ -25,4 +28,6 @@ public class Entity {
     public Entity(Region region, int x, int y){
         this.position = new Position(region, x, y);
     }
+
+
 }
