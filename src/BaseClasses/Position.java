@@ -1,3 +1,5 @@
+package BaseClasses;
+
 public class Position {
     
     private Region region;
