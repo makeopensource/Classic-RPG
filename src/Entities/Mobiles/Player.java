@@ -1,6 +1,6 @@
 package Entities.Mobiles;
 
-import Entities.Entities;
+import Entities.Entity;
 
 public class Player extends Mobile {
 

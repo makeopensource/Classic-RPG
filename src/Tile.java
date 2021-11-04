@@ -1,24 +1,25 @@
+import Entities.*;
 import java.util.*;
 
 public class Tile {
 
-    private ArrayList<Entities> ListofEntities;
+    private ArrayList<Entity> ListofEntities;
 
-    public void setEntities(ArrayList<Entities> entities){
+    public void setEntities(ArrayList<Entity> entities){
         this.ListofEntities = entities;
     }
 
-    public ArrayList<Entities> getEntities(){
+    public ArrayList<Entity> getEntities(){
         return this.ListofEntities;
     }
 
 
-    public Tile(ArrayList<Entities> entities){
+    public Tile(ArrayList<Entity> entities){
         this.ListofEntities = entities;
     }
 
     public Tile(){
-        this.ListofEntities = new ArrayList<Entities>();
+        this.ListofEntities = new ArrayList<Entity>();
     }
 
 }

@@ -4,8 +4,8 @@ package Entities;
 a refrence to a tile
 and a ref to a region
 */
-public class Entities {
-    public Entities(){
+public class Entity {
+    public Entity(){
 
     }
 
