@@ -1,18 +1,19 @@
 package BaseClasses;
 
 public class Trait <T> {
-    private T traitval;
 
-    public Trait(T traitvalue){
-        this.traitval = traitvalue;
+    private T traitVal;
+
+    public Trait(T traitValue){
+        this.traitVal = traitValue;
     }
 
-    public T getvalue(){
-        return this.traitval;
+    public T getValue(){
+        return this.traitVal;
     }
 
-    public void setval(T newvalue){
-        this.traitval = newvalue;
+    public void setValue(T newValue){
+        this.traitVal = newValue;
     }
 
 }
