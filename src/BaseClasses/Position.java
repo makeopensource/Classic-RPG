@@ -50,6 +50,10 @@ public class Position {
         return y;
     }
 
+    public void setXY(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 
     public Position(Region region, int x, int y){
         this.region = region;
