@@ -1,7 +1,9 @@
-class Traits <T> {
+package BaseClasses;
+
+class Trait <T> {
     private T traitval;
 
-    public Traits(T traitvalue){
+    public Trait(T traitvalue){
         this.traitval = traitvalue;
     }
 
@@ -17,7 +19,7 @@ class Traits <T> {
 
 class TraitTest {
     public static void main(String[] args){
-        Traits<String> trait = new Traits<>("yes");
+        Trait<String> trait = new Trait<>("yes");
         System.out.println(trait.getvalue());
         trait.setval("no");
         System.out.println(trait.getvalue());
