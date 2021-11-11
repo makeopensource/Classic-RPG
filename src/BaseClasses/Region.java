@@ -1,5 +1,8 @@
+package BaseClasses;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import BaseClasses.Tile;
 
 public class Region {
     String nodeName;
@@ -21,10 +24,13 @@ public class Region {
             this.regionGrid.add(buffRow);
         }
     }
-
     //take input from a file to create region
     public Region(String fName){
 
+    }
+
+    public Tile getTile(int x, int y){
+        return regionGrid.get(y).get(x);
     }
 
 }
