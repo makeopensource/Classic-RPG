@@ -15,8 +15,8 @@ class RegionTest {
         }
         Region testReg = new Region(tileMatrix);
 
-        assertEquals(3, testReg.getTile(2,3).getPositionX());
-        assertEquals(4, testReg.getTile(2,3).getPositionY());
+        assertEquals(2, testReg.getTile(2,3).getPositionX());
+        assertEquals(3, testReg.getTile(2,3).getPositionY());
         //here we need to compare the actual contents of the file so this assert is invalid.
 
     }
