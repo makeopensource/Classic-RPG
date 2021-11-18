@@ -2,10 +2,12 @@ package BaseClasses;
 
 import Entities.*;
 import java.util.*;
+import BaseClasses.Position;
+import BaseClasses.Region;
 
 public class Tile {
 
-    int positionX, positionY;
+    public Position pos;
 
     private ArrayList<Entity> listOfEntities;
 
@@ -26,9 +28,12 @@ public class Tile {
         this.listOfEntities = new ArrayList<>();
     }
 
-    public Tile(int X, int Y){
-        this.positionX = X;
-        this.positionY = Y;
+    public Tile(Region region, int X, int Y){
+        pos = new Position(region, X, Y);
+    }
+
+    public Tile(Region region, Position pos_arg){
+        pos = pos_arg;
     }
 
     public void addEntity(Entity nE){
@@ -36,12 +41,10 @@ public class Tile {
     }
 
     public int getPositionX(){
-        return this.positionX;
+        return this.pos.getX();
     }
     public int getPositionY(){
-        return this.positionY;
+        return this.pos.getY();
     }
-
-
 
 }
