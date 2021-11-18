@@ -1,10 +1,10 @@
 package BaseClasses;
 
-public class Trait <T> {
+public class Attribute<T> {
 
     private T traitVal;
 
-    public Trait(T traitValue){
+    public Attribute(T traitValue){
         this.traitVal = traitValue;
     }
 
