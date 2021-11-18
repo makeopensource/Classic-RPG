@@ -2,18 +2,18 @@ package BaseClasses;
 
 public class Attribute<T> {
 
-    private T traitVal;
+    private T attributeVal;
 
-    public Attribute(T traitValue){
-        this.traitVal = traitValue;
+    public Attribute(T attributesValue){
+        this.attributeVal = attributesValue;
     }
 
     public T getValue(){
-        return this.traitVal;
+        return this.attributeVal;
     }
 
     public void setValue(T newValue){
-        this.traitVal = newValue;
+        this.attributeVal = newValue;
     }
 
 }
