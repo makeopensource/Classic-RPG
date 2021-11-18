@@ -5,6 +5,8 @@ import java.util.*;
 
 public class Tile {
 
+    int positionX, positionY;
+
     private ArrayList<Entity> listOfEntities;
 
     public void setEntities(ArrayList<Entity> entities){
@@ -23,5 +25,23 @@ public class Tile {
     public Tile(){
         this.listOfEntities = new ArrayList<>();
     }
+
+    public Tile(int X, int Y){
+        this.positionX = X;
+        this.positionY = Y;
+    }
+
+    public void addEntity(Entity nE){
+        listOfEntities.add(nE);
+    }
+
+    public int getPositionX(){
+        return this.positionX;
+    }
+    public int getPositionY(){
+        return this.positionY;
+    }
+
+
 
 }
