@@ -6,27 +6,24 @@ import BaseClasses.Tile;
 
 public class Region {
     String nodeName;
-    ArrayList<String> subSectionNames = new ArrayList<String>();
-    String matrixName;
-    Tile[][] tileMatrix;
+    Tile[][] regionGrid;
 
-    public Region(String matrixName, String nodeName, int matrixRows, int matrixCols){
-        this.nodeName = nodeName;
-        this.matrixName = matrixName;
-        this.tileMatrix = new Tile[matrixRows][matrixCols];
-    }
-    public void setTileMatrix(Tile[][] tileMatrix){
-        this.tileMatrix = tileMatrix;
-    }
-    public Tile[][] getTileMatrix(){
-        return this.tileMatrix;
-    }
-    public Tile getTile(int row, int col) {
-        try {
-
-            return this.tileMatrix[row][col];
-        }catch (Exception e){}
-        return null;
+    //make region later
+    public Region(){
 
     }
+    //directly pass in an array
+    //tech allows for rows to be different lengths(idk if we want this)
+    public Region(Tile[][] inputR){
+        this.regionGrid = inputR.clone();
+    }
+    //take input from a file to create region
+    public Region(String fName){
+
+    }
+
+    public Tile getTile(int x, int y){
+        return regionGrid[y][x];
+    }
+
 }
