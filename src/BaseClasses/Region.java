@@ -1,11 +1,7 @@
 package BaseClasses;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import BaseClasses.Tile;
-
 public class Region {
-    String nodeName;
+    String regionName;
     Tile[][] regionGrid;
 
     //make region later
@@ -14,8 +10,9 @@ public class Region {
     }
     //directly pass in an array
     //tech allows for rows to be different lengths(idk if we want this)
-    public Region(Tile[][] inputR){
+    public Region(Tile[][] inputR, String name){
         this.regionGrid = inputR.clone();
+        this.regionName = name;
     }
     //take input from a file to create region
     public Region(String fName){
@@ -24,6 +21,14 @@ public class Region {
 
     public Tile getTile(int x, int y){
         return regionGrid[y][x];
+    }
+
+    public Tile getTile(Position pos){
+        return regionGrid[pos.getY()][pos.getX()];
+    }
+
+    public String getName(){
+        return regionName;
     }
 
 }
