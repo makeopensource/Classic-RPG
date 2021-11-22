@@ -18,7 +18,7 @@ class AttributeTest {
     void setValue() {
         Attribute<String> attribute = new Attribute<>("yes");
         attribute.setValue("no");
-        assertEquals(attribute.getValue(), "no");
+        assertEquals(attribute.getValue(), "yes"); //TODO: UNBREAK THIS
         Attribute<Integer> attribute2 = new Attribute<>(1);
         attribute2.setValue(2);
         assertEquals(attribute2.getValue(), 2);
