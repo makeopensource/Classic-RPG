@@ -18,6 +18,5 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '16'
-        distribution: 'microsoft'
         cache: maven
     - run: mvn -B package --file pom.xml
