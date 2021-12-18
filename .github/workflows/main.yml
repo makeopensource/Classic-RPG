@@ -7,7 +7,7 @@ on: [push, pull_request]
 
 jobs:
 
-  build:
+  - build:
     name: Build and Run Tests
 
     runs-on: ubuntu-latest
@@ -18,5 +18,85 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '16'
+        distribution: 'temurin'
+        cache: maven
+    - run: mvn -B package --file pom.xml
+
+  - build:
+    name: Build and Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'zulu'
+        cache: maven
+    - run: mvn -B package --file pom.xml
+
+
+  - build:
+    name: Build and Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'adopt'
+        cache: maven
+    - run: mvn -B package --file pom.xml
+
+
+  - build:
+    name: Build and Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'adopt-openj9'
+        cache: maven
+    - run: mvn -B package --file pom.xml
+
+
+  - build:
+    name: Build and Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'liberica'
+        cache: maven
+    - run: mvn -B package --file pom.xml
+
+
+  - build:
+    name: Build and Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 16
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'microsoft'
         cache: maven
     - run: mvn -B package --file pom.xml
