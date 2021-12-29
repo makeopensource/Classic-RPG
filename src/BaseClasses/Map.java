@@ -21,7 +21,7 @@ public class Map {
     /**
      * Overloaded version of above add Region, Except if the user does not wish to add a list of connected
      * regions, they can do that through the use of the function addConnnectedRegion
-     * @param RegionPrime
+     * @param RegionPrime - The new region to be added to the Region Dictionary.
      */
     public void addRegion(Region RegionPrime){
         this.addRegion(RegionPrime,this.emptyList);
@@ -34,10 +34,7 @@ public class Map {
      * @return List<String> Of Connected Regions.
      */
     public List<Region> getListOfConnectedRegion(Region RegionName){
-        if(this.RegionDictionaryLocal.contains(RegionName)){
-            return this.RegionDictionaryLocal.get(RegionName);
-        }
-        else{return null;}
+        return this.RegionDictionaryLocal.getOrDefault(RegionName, null);
     }
 
     /**
@@ -65,12 +62,12 @@ public class Map {
      * @return True if the HashTable contains the Value
      *
      */
-    public boolean contains(Region RegionName){
-        return this.RegionDictionaryLocal.contains(RegionName);
+    public boolean containsKey(Region RegionName){
+        return this.RegionDictionaryLocal.containsKey(RegionName);
     }
-    /**
-     * Programmers Note: I am realizing now after making all of this i could have simply used inheritance from a HashTable
-     * and simply overloaded the values. This would have made programming this a lot more simpler. If anyone would like to fix this.
-     * Please be my guest.
+    /*
+      Programmers Note: I am realizing now after making all of this I could have simply used inheritance from a HashTable
+      and simply overloaded the values. This would have made programming this a lot simpler. If anyone would like to fix this.
+      Please be my guest.
      */
 }
