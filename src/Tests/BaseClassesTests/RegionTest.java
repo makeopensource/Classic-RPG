@@ -1,7 +1,11 @@
 package Tests.BaseClassesTests;
+import BaseClasses.Map;
 import BaseClasses.Tile;
 import BaseClasses.Region;
 import BaseClasses.Position;
+
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegionTest {
@@ -15,14 +19,13 @@ class RegionTest {
                 tileMatrix[i][j] = new Tile(testReg, j,i);
             }
         }
+
         Position testPos = new Position(testReg, 2, 2);
         assertEquals(2, testReg.getTile(2,3).getPositionX());
         assertEquals(3, testReg.getTile(2,3).getPositionY());
         assertEquals("testRegion", testReg.getName());
         assertEquals(2, testReg.getTile(testPos).getPositionX());
         assertEquals(2, testReg.getTile(testPos).getPositionY());
-        //here we need to compare the actual contents of the file so this assert is invalid.
-
     }
 
 
