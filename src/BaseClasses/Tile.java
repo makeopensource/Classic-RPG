@@ -19,21 +19,34 @@ public class Tile {
         return this.listOfEntities;
     }
 
-
     public Tile(ArrayList<Entity> entities){
+        pos = null;
         this.listOfEntities = entities;
     }
 
     public Tile(){
+        pos = null;
         this.listOfEntities = new ArrayList<>();
     }
 
     public Tile(Region region, int X, int Y){
         pos = new Position(region, X, Y);
+        this.listOfEntities = new ArrayList<>();
     }
 
-    public Tile(Region region, Position pos_arg){
+    public Tile(Position pos_arg){
         pos = pos_arg;
+        this.listOfEntities = new ArrayList<>();
+    }
+
+    public Tile(Region region, int X, int Y, ArrayList<Entity> entities){
+        pos = new Position(region, X, Y);
+        this.listOfEntities = entities;
+    }
+
+    public Tile(Position pos_arg, ArrayList<Entity> entities){
+        pos = pos_arg;
+        this.listOfEntities = entities;
     }
 
     public void addEntity(Entity nE){
@@ -43,8 +56,33 @@ public class Tile {
     public int getPositionX(){
         return this.pos.getX();
     }
+
     public int getPositionY(){
         return this.pos.getY();
+    }
+
+    public Region getRegion(){
+        return this.pos.getRegion();
+    }
+
+    public void setPositionX(int x){
+        this.pos.setX(x);
+    }
+
+    public void setPositionY(int y){
+        this.pos.setY(y);
+    }
+
+    public void setPositionXY(int x, int y){
+        this.pos.setXY(x, y);
+    }
+
+    public void setRegion(Region reg){
+        this.pos.setRegion(reg);
+    }
+
+    public void setPosition(Position pos){
+        this.pos = pos;
     }
 
 }
