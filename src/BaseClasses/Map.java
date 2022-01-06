@@ -2,9 +2,10 @@ package BaseClasses;
 import java.util.*;
 public class Map {
     Hashtable<Region, List<Region>> RegionDictionaryLocal;
-    private List<Region> emptyList = new ArrayList<>();
+    private final List<Region> emptyList = new ArrayList<>();
     public Map(Hashtable<Region,List<Region>> RegionDictionary){
         // Takes (RegionName -> ConnectedRegionList) Exclude self(RegionName) in ConnectedRegion
+        // DO NOT PUT THE REGION ITSELF IN THE CONNECTED REGIONS!!
         RegionDictionaryLocal = RegionDictionary;
     }
 
@@ -67,7 +68,7 @@ public class Map {
     }
     /*
       Programmers Note: I am realizing now after making all of this I could have simply used inheritance from a HashTable
-      and simply overloaded the values. This would have made programming this a lot simpler. If anyone would like to fix this.
+      and simply overwrite the values. This would have made programming this a lot simpler. If anyone would like to fix this.
       Please be my guest.
      */
 }
