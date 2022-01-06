@@ -5,7 +5,7 @@ import BaseClasses.Position;
 import java.util.*;
 
 public class Mobile{
-    private final List<Position> pathingQueue;
+    public final List<Position> pathingQueue;
 
     /**
      * Constructor for Mobile, that takes a list of Position that acts as a queue for where the enemy wishes to travel,
@@ -19,6 +19,14 @@ public class Mobile{
      * Default constructor for Mobile. Will make an empty list to a pathingQueue.
      */
     public Mobile(){
-        this.pathingQueue = Collections.emptyList();
+        this.pathingQueue = new ArrayList<>();
+    }
+
+    /**
+     * Adds a Position to the pathingQueue.
+     * @param AddedPosition - A Position added to the pathing Queue. THIS WILL BE ADDED TO THE TAIL END.
+     */
+    public void add(Position AddedPosition){
+        this.pathingQueue.add(AddedPosition);
     }
 }
