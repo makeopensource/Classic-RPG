@@ -49,6 +49,17 @@ public class Tile {
         this.listOfEntities = entities;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+
+        if (!(o instanceof Tile)) return false;
+
+        Tile other = (Tile)(o);
+
+        return this.pos == other.pos;
+    }
+
     public void addEntity(Entity nE){
         listOfEntities.add(nE);
     }
