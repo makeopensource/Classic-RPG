@@ -1,5 +1,5 @@
 package Entities;
 
-public class Weapon {
+public class Weapon extends Item {
 
 }

@@ -1,6 +1,12 @@
 package Entities;
-
+import BaseClasses.Position;
 
 public class Item{
-    public Item(int DMG){}
+    Position ItemPositon;
+    public Item(){
+
+    }
+    public void Use(){
+
+    }
 }
