@@ -31,4 +31,14 @@ public class Region {
         return regionName;
     }
 
+    public void printRegion(){
+    for (Tile[] row : regionGrid) {
+      for (Tile tile: row){
+        print(String(tile.getTileType))
+      }
+      printLn()
+    }
+
+    }
+
 }
