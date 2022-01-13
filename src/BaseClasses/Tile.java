@@ -142,8 +142,4 @@ public class Tile {
         this.pos = pos;
     }
 
-    public int getTileType(){
-    return 0;
-    }
-
 }
