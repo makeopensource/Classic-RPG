@@ -27,9 +27,23 @@ class RegionTest {
         assertEquals(2, testReg.getTile(testPos).getPositionX());
         assertEquals(2, testReg.getTile(testPos).getPositionY());
     }
+    @org.junit.jupiter.api.Test
+    void mapTestPrint(){
+        Tile[][] tileMatrix = new Tile[5][5];
+        Region testReg = new Region(tileMatrix, "testRegion");
+        for(int j = 0; j<5;j++){
+            for(int i = 0; i < 5; i++){
+                tileMatrix[i][j] = new Tile(testReg,i,j);
+            }
+        }
+        for(int row = 0; row<5;row++){
+            for(int column = 0; column<5;column++){
+                if(column < 4){System.out.print(tileMatrix[column][row].tileID+",");}
+                else{System.out.print(tileMatrix[column][row].tileID);}
+            }
+            System.out.println();
+        }
 
-
-
-
+    }
 }
 
