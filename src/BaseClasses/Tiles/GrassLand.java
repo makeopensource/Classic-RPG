@@ -3,7 +3,8 @@ package BaseClasses.Tiles;
 import BaseClasses.Tile;
 
 public class GrassLand extends Tile {
-    public int getTileType(){
-        return 1;
+    public GrassLand(){
+        this.passable = true;
+        this.tileID = 1;
     }
 }

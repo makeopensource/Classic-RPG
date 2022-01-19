@@ -8,8 +8,9 @@ import BaseClasses.Region;
 public class Tile {
 
     public Position pos;
-
+    public boolean passable = true;
     private ArrayList<Entity> listOfEntities;
+    public int tileID = 0;
 
     /**
      * Puts an arrayList of entities on to a tile. Note: This function does not add entities to a tile.
@@ -142,8 +143,5 @@ public class Tile {
         this.pos = pos;
     }
 
-    public int getTileType(){
-        return 0;
-    }
 
 }
