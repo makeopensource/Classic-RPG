@@ -4,7 +4,7 @@ import BaseClasses.Tile;
 
 public class Water extends Tile {
     public Water(){
-        passable = false;
-        tileID = 3;
+        this.passable = false;
+        this.tileID = 3;
     }
 }
