@@ -12,6 +12,10 @@ Fetch:
 git fetch  
 Pull upstream:  
 git pull upstream <branchname> (Most likely will be dev.)
+## NOTE FOR THOSE WHO ARE CONTINUING!
+Please be sure to always fetch and pull from upstream before coding! If you do not do this and  
+you create a pull request, your pull request will be denied, and you also might have to fix merging  
+conflicts!
 ## Creating Tests:
 To quickly create tests for a class, right-click on the class name in intellij, click show context actions, and then click create test.  
 Place the tests in an appropriately formatted folder.
