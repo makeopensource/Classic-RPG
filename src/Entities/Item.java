@@ -1,12 +1,10 @@
 package Entities;
 import BaseClasses.Position;
 
-public class Item{
-    Position ItemPositon;
+abstract public class Item{
+    Position ItemPosition;
     public Item(){
 
     }
-    public void Use(){
-
-    }
+    public abstract void Use();
 }

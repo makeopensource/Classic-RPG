@@ -1,10 +1,8 @@
 package Tests.BaseClassesTests;
-import BaseClasses.Map;
 import BaseClasses.Tile;
 import BaseClasses.Region;
 import BaseClasses.Position;
 
-import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +29,7 @@ class RegionTest {
     void mapTestPrint(){
         Tile[][] tileMatrix = new Tile[5][5];
         Region testReg = new Region(tileMatrix, "testRegion");
-        for(int j = 0; j<5;j++){
+        for(int j = 0; j<5; j++){
             for(int i = 0; i < 5; i++){
                 tileMatrix[i][j] = new Tile(testReg,i,j);
             }
@@ -43,7 +41,6 @@ class RegionTest {
             }
             System.out.println();
         }
-
     }
 }
 

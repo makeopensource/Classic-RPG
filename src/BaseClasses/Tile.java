@@ -2,8 +2,6 @@ package BaseClasses;
 
 import Entities.*;
 import java.util.*;
-import BaseClasses.Position;
-import BaseClasses.Region;
 
 public class Tile {
 
@@ -15,10 +13,10 @@ public class Tile {
     /**
      * Puts an arrayList of entities on to a tile. Note: This function does not add entities to a tile.
      * It WILL overwrite the existing array list.
-     * @param entities - An ArrayList of entities.
+     * @param listOfEntities - An ArrayList of entities.
      */
-    public void setEntities(ArrayList<Entity> entities){
-        this.listOfEntities = entities;
+    public void setEntities(ArrayList<Entity> listOfEntities){
+        this.listOfEntities = listOfEntities;
     }
 
     /**
@@ -28,6 +26,7 @@ public class Tile {
     public ArrayList<Entity> getEntities(){
         return this.listOfEntities;
     }
+
 
     public Tile(ArrayList<Entity> entities){
         pos = null;
@@ -62,7 +61,7 @@ public class Tile {
     /**
      * Checks to see if the tile is the same tile in memory address.
      * @param o - This is the tile we are checking.
-     * @return - A boolean of either true or false depending if the tile is the same in memory.
+     * @return - A boolean of either true or false depending on the tile is the same in memory.
      */
     @Override
     public boolean equals(Object o){
