@@ -1,4 +1,4 @@
-package Tests.BaseClassesTests;
+package BaseClassesTests;
 import BaseClasses.Tile;
 import BaseClasses.Region;
 import BaseClasses.Position;
