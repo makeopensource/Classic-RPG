@@ -1,4 +1,4 @@
-package Tests.BaseClassesTests;
+package BaseClassesTests;
 
 import org.junit.jupiter.api.Test;
 import BaseClasses.Position;

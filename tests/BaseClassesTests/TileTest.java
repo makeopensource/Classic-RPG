@@ -1,4 +1,4 @@
-package Tests.BaseClassesTests;
+package BaseClassesTests;
 
 import BaseClasses.Position;
 import BaseClasses.Region;
