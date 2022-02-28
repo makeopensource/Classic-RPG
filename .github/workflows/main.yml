@@ -21,5 +21,5 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - run: mvn -B package --file pom.xml
-    - run: ls
+    - run: git status
 
