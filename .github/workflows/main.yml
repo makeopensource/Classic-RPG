@@ -21,4 +21,4 @@ jobs:
         distribution: 'zulu'
         cache: maven
     - run: mvn compile
-    - run: java -jar junit-platform-console-standalone-1.7.2.jar --class-path target  --scan-class-path
+    - run: mvn test
