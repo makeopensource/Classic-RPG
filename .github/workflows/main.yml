@@ -20,5 +20,5 @@ jobs:
         java-version: '17'
         distribution: 'zulu'
         cache: maven
-    - run: mvn -X
+    - run: mvn test -X
     - run: mvn clean test
