@@ -20,7 +20,7 @@
                 <directory>src/main/java</directory>
             </resource>
             <resource>
-                <directory>tests/</directory>
+                <directory>tests</directory>
             </resource>
         </resources>
 
