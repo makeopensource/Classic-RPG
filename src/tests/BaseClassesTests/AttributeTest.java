@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AttributeTest {
 
     @org.junit.jupiter.api.Test
-    void getValue() {
+    void getValueTest() {
         Attribute<String> attribute = new Attribute<>("yes");
         assertEquals(attribute.getValue(), "yes");
         Attribute<Integer> attribute2 = new Attribute<>(1);
@@ -15,7 +15,7 @@ class AttributeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void setValue() {
+    void setValueTest() {
         Attribute<String> attribute = new Attribute<>("yes");
         attribute.setValue("no");
         assertEquals(attribute.getValue(), "yes"); //TODO: UNBREAK THIS
