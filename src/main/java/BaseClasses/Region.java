@@ -31,4 +31,9 @@ public class Region {
         return regionName;
     }
 
+    public int getWidth(){return this.regionGrid[0].length;}
+
+    public int getHeight(){return this.regionGrid.length;}
+
+
 }

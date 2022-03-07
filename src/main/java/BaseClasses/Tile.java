@@ -6,7 +6,7 @@ import java.util.*;
 public class Tile {
 
     public Position pos;
-    public boolean passable = true;
+    public boolean passable;
     private ArrayList<Entity> listOfEntities;
     public int tileID = 0;
 
@@ -140,6 +140,14 @@ public class Tile {
      */
     public void setPosition(Position pos){
         this.pos = pos;
+    }
+
+    /**
+     *
+     * @return isPassable - returns if the tile is passage
+     */
+    public boolean isPassable(){
+        return passable;
     }
 
 
