@@ -22,5 +22,6 @@ class AttributeTest {
         Attribute<Integer> attribute2 = new Attribute<>(1);
         attribute2.setValue(2);
         assertEquals(attribute2.getValue(), 2);
+
     }
 }
