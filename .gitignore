@@ -1,1 +1,13 @@
-out/
+# Compiled code
+target/
+
+# IntelliJ IDEA stuff
+.idea/
+
+# Specific stuff to allow from .idea
+## IntelliJ config
+!/.idea/Classic-RPG.iml
+## IntelliJ project plugins
+!/.idea/externalDependencies.xml
+## IntelliJ linting/formatting rules
+!/.idea/codeStyles/
