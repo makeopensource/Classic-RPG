@@ -5,6 +5,10 @@ public class Position {
     private Region region;
     private int x, y;
 
+    public Position() {
+        this.region = new Region();
+    }
+
     @Override
     public boolean equals(Object o){
         if (this == o) return true;
