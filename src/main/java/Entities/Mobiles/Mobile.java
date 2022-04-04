@@ -1,17 +1,25 @@
 package Entities.Mobiles;
 
 import BaseClasses.Position;
+import Entities.Entity;
 import Entities.Item;
 import BaseClasses.Direction;
 
 import java.util.*;
 
-public class Mobile{
-    public final List<Position> pathingQueue;
+public class Mobile extends Entity {
+    public  List<Position> pathingQueue;
     public Position position;
     public int health;
     public ArrayList<Item> Inventory;
 
+    /** Default mobile constructor, yes it does nothing.**/
+    public Mobile(){
+        this.pathingQueue = null;
+        this.position = null;
+        this.health = 0;
+        this.Inventory = null;
+    }
 
     /**
      * @param startingHealth - Spawning a player with how much health.
@@ -33,12 +41,7 @@ public class Mobile{
     public Mobile(List<Position> Pathing){
         this.pathingQueue = Pathing;
     }
-    /**
-     * Default constructor for Mobile. Will make an empty list to a pathingQueue.
-     */
-    public Mobile(){
-        this.pathingQueue = new ArrayList<>();
-    }
+
 
     /**
      * Adds a Position to the pathingQueue.

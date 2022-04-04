@@ -5,7 +5,7 @@ import BaseClasses.Region;
 
 public class Entity {
 
-    private Position position;
+    private final Position position;
 
     public Position getPosition(){
         return position;
@@ -28,6 +28,8 @@ public class Entity {
     public Entity(Region region, int x, int y){
         this.position = new Position(region, x, y);
     }
-
-
+/** The default Entity Constructor**/
+    public Entity(){
+        this.position = new Position();
+    }
 }
