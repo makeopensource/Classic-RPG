@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 class TileTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void position() {
         Region testRegion1 = new Region();
         Position testPosition1 = new Position(testRegion1, 1, 2);
@@ -45,7 +46,7 @@ class TileTest {
         assertEquals(testTile1.getPositionY(), 10);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void entities() {
         //TODO entity tests
     }

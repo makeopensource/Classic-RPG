@@ -1,4 +1,5 @@
 package BaseClassesTests;
+
 import BaseClasses.Map;
 import BaseClasses.Tile;
 import BaseClasses.Region;
@@ -6,9 +7,10 @@ import BaseClasses.Region;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class MapTest {
-    @org.junit.jupiter.api.Test
+    @Test
     void createMap(){
         /*
           Creates a test region to handle Specific
