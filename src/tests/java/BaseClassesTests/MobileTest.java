@@ -1,4 +1,5 @@
 package BaseClassesTests;
+
 import BaseClasses.Position;
 import BaseClasses.Region;
 import Entities.Mobiles.*;
@@ -7,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
 public class MobileTest {
-    @org.junit.jupiter.api.Test
+    @Test
     void createMobile(){
         //Programmers Note: Mobile should also take an entity that has the ability to move.
         // This has not been developed yet.

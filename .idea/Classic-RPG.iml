@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/tests/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/${project.build.directory}/classes" />
       <excludeFolder url="file://$MODULE_DIR$/${project.build.directory}/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
@@ -39,23 +40,13 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-assimp:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-glfw:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-openal:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-opengl:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-stb:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-tinyfd:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-assimp:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-glfw:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-openal:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-opengl:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-stb:natives-linux:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.lwjgl:lwjgl-tinyfd:natives-linux:3.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.2" level="project" />
   </component>
 </module>
