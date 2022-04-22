@@ -1,12 +1,18 @@
 package BaseClasses;
 
 import Entities.*;
+import Entities.Mobiles.Enemy;
+import Entities.Mobiles.Mobile;
+import Entities.Mobiles.Player;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Tile {
 
     public Position pos;
     public boolean passable;
+    public boolean visible;
     private ArrayList<Entity> listOfEntities;
     public int tileID = 0;
 
@@ -20,6 +26,22 @@ public class Tile {
     }
 
     /**
+     * Adds an entity to an already existing tile entity list.
+     * @param nE - The new Entity that is being added to the list.
+     */
+    public void addEntity(Entity nE){
+        listOfEntities.add(nE);
+    }
+
+    /**
+     * Removes an entity
+     * It will NOT check if the entity is already in the list
+     * @param rE - The Entity that is being removed to the list.
+     */
+    public void removeEntity(Entity rE){listOfEntities.remove(rE);}
+
+
+    /**
      * Returns a list of entities on this tile.
      * @return - The List of Entities on this tile.
      */
@@ -28,15 +50,34 @@ public class Tile {
     }
 
 
-    public Tile(ArrayList<Entity> entities){
-        pos = null;
-        this.listOfEntities = entities;
+    //a set of functions that explain the contents of the tiles entities
+    public boolean hasPlayer(){
+        for(int i= 0; i<this.listOfEntities.size(); i++){
+            if(this.listOfEntities.get(i).getClass().equals(Player.class)){
+                return true;
+            }
+        }
+        return false;
     }
 
-    public Tile(){
-        pos = null;
-        this.listOfEntities = new ArrayList<>();
+    public boolean hasEnemy(){
+        for(int i= 0; i<this.listOfEntities.size(); i++){
+            if(this.listOfEntities.get(i).getClass().equals(Enemy.class)){
+                return true;
+            }
+        }
+        return false;
     }
+
+    public boolean hasMobile(){
+        for(int i= 0; i<this.listOfEntities.size(); i++){
+            if(this.listOfEntities.get(i).getClass().equals(Mobile.class)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public Tile(Region region, int X, int Y){
         pos = new Position(region, X, Y);
@@ -74,13 +115,6 @@ public class Tile {
         return this.pos == other.pos;
     }
 
-    /**
-     * Adds an entity to an already existing tile entity list.
-     * @param nE - The new Entity that is being added to the list.
-     */
-    public void addEntity(Entity nE){
-        listOfEntities.add(nE);
-    }
 
     /**
      * Returns X and Y coordinates for this tile.
@@ -146,9 +180,26 @@ public class Tile {
      *
      * @return isPassable - returns if the tile is passage
      */
+
+    public ArrayList<Tile> getAdjacent(){
+        ArrayList<Tile> retList = new ArrayList<>();
+        for(int i = -1; i < 2; i ++){
+            for(int j = -1; j < 2; j++){
+                if(this.getRegion().getTile(this.getPositionX()+i, this.getPositionY()+j) != null){
+                    retList.add(getRegion().getTile(this.getPositionX()+i, this.getPositionY()+j));
+                }
+            }
+        }
+        return retList;
+    }
     public boolean isPassable(){
         return passable;
     }
+
+    public boolean isVisible(){
+        return visible;
+    }
+
 
 
 }

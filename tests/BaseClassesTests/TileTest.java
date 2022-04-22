@@ -4,6 +4,10 @@ import BaseClasses.Position;
 import BaseClasses.Region;
 import BaseClasses.Tile;
 import Entities.Entity;
+import Entities.Item;
+import Entities.Mobiles.Enemy;
+import Entities.Mobiles.Mobile;
+import Entities.Mobiles.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +52,16 @@ class TileTest {
     @org.junit.jupiter.api.Test
     void entities() {
         //TODO entity tests
+    }
+
+    @org.junit.jupiter.api.Test
+    void hasMethods() {
+        Region testRegion1 = new Region();
+        ArrayList<Entity> aLM = new ArrayList<>();
+        aLM.add(new Enemy(1,new ArrayList<Item>(),new Position(testRegion1,0,0),0));
+        aLM.add(new Player(1, new ArrayList<Item>(), new Position(testRegion1, 0,0)));
+        Tile tile = new Tile(testRegion1,0,0,aLM);
+
     }
 
 }
