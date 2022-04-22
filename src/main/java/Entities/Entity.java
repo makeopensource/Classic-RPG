@@ -10,9 +10,7 @@ public class Entity {
 
     //Constructor for using reference (equipped/held items)
     public Entity(Position position){
-
         this.position = position;
-        this.position.getRegion().getTile(position).addEntity(this);
     }
 
     public Entity(Region region, int x, int y){

@@ -14,10 +14,7 @@ public class Region {
     Tile[][] regionGrid;
     ArrayList<Entity> entityList;
 
-    //make region later
-    public Region(){
 
-    }
     //directly pass in an array
     //tech allows for rows to be different lengths(idk if we want this)
     public Region(Tile[][] inputR, String name){
