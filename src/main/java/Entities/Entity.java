@@ -10,12 +10,15 @@ public class Entity {
 
     //Constructor for using reference (equipped/held items)
     public Entity(Position position){
+
         this.position = position;
+        this.position.getRegion().getTile(position).addEntity(this);
     }
 
     public Entity(Region region, int x, int y){
         this.position = new Position(region, x, y);
         this.position.getRegion().addEntity(this);
+        this.position.getRegion().getTile(position).addEntity(this);
     }
 
     public Position getPosition(){
@@ -24,14 +27,17 @@ public class Entity {
 
     public void setPosition(Position position){
         //Important that the address doesn't change but the values do
+        this.position.getRegion().getTile(position).removeEntity(this);
         this.position.set(position);
         this.position.getRegion().addEntity(this);
+        this.position.getRegion().getTile(position).addEntity(this);
     }
 
     public void setPosition(int x, int y){
+        this.position.getRegion().getTile(position).removeEntity(this);
         this.position.setXY(x, y);
+        this.position.getRegion().getTile(position).addEntity(this);
     }
-
 
 
     /**
@@ -41,6 +47,5 @@ public class Entity {
     public void move(Direction direction){
         position.move(this, direction);
     }
-
 
 }
