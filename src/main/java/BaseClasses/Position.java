@@ -1,5 +1,7 @@
 package BaseClasses;
 
+import Entities.Entity;
+
 public class Position {
     
     private Region region;
@@ -64,41 +66,54 @@ public class Position {
 
     also inBounds MUST be first
      */
-    private void moveNorth(){
+    private void moveNorth(Entity entity){
         if(isInBounds(this.x, this.y-1) && region.getTile(this.x, this.y-1).isPassable()) {
+            region.getTile(x,y).removeEntity(entity);
             this.y = this.y - 1;
+            region.getTile(x,y).addEntity(entity);
         }
     }
 
-    private void moveEast(){
+    private void moveEast(Entity entity){
         if (isInBounds(this.x + 1, this.y) && region.getTile(this.x + 1, this.y).isPassable()) {
+            region.getTile(x,y).removeEntity(entity);
             this.x = this.x+1;
+            region.getTile(x,y).addEntity(entity);
         }
     }
 
-    private void moveSouth(){
+    private void moveSouth(Entity entity){
         if(isInBounds(this.x, this.y+1) && region.getTile(this.x, this.y+1).isPassable()){
+            region.getTile(x,y).removeEntity(entity);
             this.y = this.y + 1;
+            region.getTile(x,y).addEntity(entity);
         }
     }
 
-    private void moveWest(){
+    private void moveWest(Entity entity){
         if(isInBounds(this.x-1, this.y) && region.getTile(this.x-1, this.y).isPassable()) {
+            region.getTile(x,y).removeEntity(entity);
             this.x = this.x - 1;
+            region.getTile(x,y).removeEntity(entity);
         }
     }
 
-    //this will check to see if the player has stayed in the bounds of the region
-    public void move(Direction direction){
-        if(direction == Direction.NORTH){
-            this.moveNorth();
-        }else if(direction == Direction.EAST){
-            this.moveEast();
-        }else if(direction == Direction.SOUTH){
-            this.moveSouth();
-        }else if(direction == Direction.WEST){
-            this.moveWest();
-        }
+    //honestly the move implementaiton is some of the worst code ive written to this date
+    public void move(Entity entity, Direction direction){
+        switch(direction){
+            case NORTH:
+                this.moveNorth(entity);
+                break;
+            case EAST:
+                this.moveEast(entity);
+                break;
+            case SOUTH:
+                this.moveSouth(entity);
+                break;
+            case WEST:
+                this.moveWest(entity);
+                break;
+            }
     }
 
     private boolean isInBounds(int x,int y){

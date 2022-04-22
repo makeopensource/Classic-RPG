@@ -6,25 +6,6 @@ import BaseClasses.Region;
 
 public class Player extends Mobile {
 
-
-
-    /**
-     * @param startingHealth - Spawning a player with how much health.
-     */
-    public Player(int startingHealth){
-        this.health = startingHealth;
-        this.Inventory = new ArrayList<>();
-    }
-    /**
-     * @param startingHealth - Spawning a player with how much health.
-     * @param startingInventory - Spawning a player with a specified inventory
-     */
-
-    public Player(int startingHealth, ArrayList<Item> startingInventory){
-        this.health = startingHealth;
-        this.Inventory = startingInventory;
-    }
-
     /**
      * @param startingHealth - Spawning a player with how much health.
      * @param startingInventory - Spawning a player with a specified inventory
@@ -32,8 +13,6 @@ public class Player extends Mobile {
      */
 
     public Player(int startingHealth, ArrayList<Item> startingInventory, Position startingPosition){
-        this.health = startingHealth;
-        this.Inventory = startingInventory;
-        this.position = startingPosition;
+        super(startingHealth, startingInventory, startingPosition);
     }
 }

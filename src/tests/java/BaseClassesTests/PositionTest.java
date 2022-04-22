@@ -6,6 +6,7 @@ import BaseClasses.Region;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
+    /*
     Region testregion1 = new Region();
     Region testregion2 = new Region();
 
@@ -86,5 +87,8 @@ class PositionTest {
         assertNotEquals(tp1, tp2);
         tp2.setXY(1, 1);
         assertEquals(tp1, tp2);
-    }
+        }
+        */
+
+
 }
