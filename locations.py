@@ -1,9 +1,35 @@
-from crpg import Location
+from crpg import Location, print_options
 
-starting = Location('starting')
+class Dungeon(Location):
+    def __init__(self, **kwargs):
+        self.fought_troll = False
+        options = ["fight", "flee"]
+        super(Location, self).__init__(**kwargs)
 
-dungeon = Location('dungeon')
+    def fight_troll(self):
+        if not self.fought_troll:
+            print("""
+            A towering troll stands in your way.
+            What do you do?
+            """)
+ 
 
-cavern = Location('cavern')
+    def landing(self):
+        print("""
+        You have landed in the Dungeon!
+        """)
 
-castle = Location('castle')
+        self.fight_troll()
+
+
+class Cavern(Location):
+    def landing(self):
+        print("""
+        You have landed in the Cavern!
+        """)
+
+class Castle(Location):
+    def landing(self):
+        print("""
+        You have landed in the Cavern!
+        """)

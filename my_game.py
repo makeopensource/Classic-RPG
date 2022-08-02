@@ -5,14 +5,16 @@ import locations as loc
 game = Game("my custom game")
 
 # init locations
-starting, cavern, castle = loc.starting, loc.cavern, loc.castle
+dungeon = loc.Dungeon("The spooky dungeon")
+cavern = loc.Cavern("The dangerous cavern")
+castle = loc.Castle("The majestic castle")
 
-game.add_location(starting, True)
+game.add_location(dungeon, True)
 game.add_location(cavern)
 game.add_location(castle)
 
-game.add_twoway_connection(starting, cavern)
+game.add_twoway_connection(dungeon, cavern)
 game.add_twoway_connection(cavern, castle)
-game.add_twoway_connection(starting, castle)
+game.add_twoway_connection(dungeon, castle)
 
 game.start()
