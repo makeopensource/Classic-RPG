@@ -14,30 +14,6 @@ def print_options(options):
     print('\n'.join(listed_options))
 
 
-class Input:
-    def __init__(self, text, _type):
-        self.text = text
-        self.type = _type
-
-    def __enter__(self):
-        try:
-            retval = self.type(input(self.text))
-            clear()
-            assert retval
-            return retval
-
-        except (TypeError,ValueError):
-            print("Invalid value")
-
-        except KeyboardInterrupt:
-            print("\nThanks for playing!")
-            exit(0)
-
-    def __exit__(self):
-        pass
-
-
-
 class Location:
     def __init__(self, name):
         self.name = name
@@ -85,18 +61,31 @@ class Game:
         self.current_location.landing()
 
     def start(self):
-
-        assert self.current_location
-
         while True:
             if len(self.adjacent_locations()) == 0:
                 print("You reached a dead end, Game Over!")
                 exit(0)
 
-            print_options(self.adjacent_locations()) 
+            locations = [f'{i+1}] {x}' for i, x in enumerate(self.adjacent_locations())]
+            print('\n'.join(locations))
 
-            with Input("Pick a path", int) as user_input:
-                n = user_input
+            try:
+                n = int(input("Pick a path: "))
+                clear()
+
+            except KeyboardInterrupt:
+                print("\nThanks for playing!")
+                exit(0)
+
+            except (TypeError,ValueError):
+                n = 0
+
+            try:
+                assert n > 0
                 new_location = self.adjacent_locations()[n - 1]
+                print(new_location)
                 self.move_to_location(new_location)
+
+            except AssertionError:
+                print("Invalid input")
 
