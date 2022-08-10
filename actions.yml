@@ -1,16 +1,21 @@
-- location: Castle
-  events:
-    - title: "Fight Monster"
-      description: "Fight a three-headed hound"
-      actions:
-        - title: "Fight the monster"
-          xp: 10
-          gold: 5
-        - title: "Run away"
-          xp: -5
-          gold: -5
+title: "My Game"
+locations:
+  - title: Castle
+    events:
+      - title: "Fight Monster"
+        description: "Fight a three-headed hound"
+        actions:
+          - title: "Fight the monster"
+            xp: 10
+            gold: 5
+          - title: "Run away"
+            xp: -5
+            gold: -5
+        nearby:
+          - Dungeon
+          - Cavern
 
 
-- location: Dungeon
-- location: Cavern
+  - title: Dungeon
+  - title: Cavern
 

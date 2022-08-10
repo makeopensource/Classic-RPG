@@ -1,32 +1,15 @@
 import os
-
-
-def clear():
-    if os.name == "posix": 
-        os.system('clear')
-    else: 
-        os.system('cls')
-
-
-def print_options(options):
-    options = list(options)
-    listed_options = [f'{i+1}] {x}' for i, x in enumerate(options)]
-    print('\n'.join(listed_options))
+import yaml
 
 
 class Location:
-    def __init__(self, name):
-        self.name = name
-
-    def landing(self):
-        print("""
-        This is the landing site
-        """)
+    def __init__(self, config):
+        self.title = config['title']
+        self.events = config['events']
 
 
-class Game:
-    def __init__(self, name):
-        self.name = name
+class Board:
+    def __init__(self):
         self.current_location = None
         self.locations = {}
         self.connections = {}
@@ -60,32 +43,23 @@ class Game:
         self.current_location = self.locations[new_location_name]
         self.current_location.landing()
 
-    def start(self):
+
+class Game:
+    def __init__(self, filename):
+        self.config = yaml.safe_load(open(filename, 'r'))
+        self.board = Board()
+        self.title = self.config['title']
+        for location in self.config['locations']:
+
+            # add location to board
+            new_location = Location(location)
+            self.board.add_location(new_location)
+
+            # add nearby connections to board
+            for nearby in location['nearby']:
+                self.board.add_oneway_connection(location, nearby)
+        print(self.config)
+
+    def start():
         while True:
-            if len(self.adjacent_locations()) == 0:
-                print("You reached a dead end, Game Over!")
-                exit(0)
-
-            locations = [f'{i+1}] {x}' for i, x in enumerate(self.adjacent_locations())]
-            print('\n'.join(locations))
-
-            try:
-                n = int(input("Pick a path: "))
-                clear()
-
-            except KeyboardInterrupt:
-                print("\nThanks for playing!")
-                exit(0)
-
-            except (TypeError,ValueError):
-                n = 0
-
-            try:
-                assert n > 0
-                new_location = self.adjacent_locations()[n - 1]
-                print(new_location)
-                self.move_to_location(new_location)
-
-            except AssertionError:
-                print("Invalid input")
 
