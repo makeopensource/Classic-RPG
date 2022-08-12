@@ -1,6 +1,7 @@
 title: "My Game"
 locations:
-  - title: Castle
+  - title: "Castle"
+    starting: True
     events:
       - title: "Fight Monster"
         description: "Fight a three-headed hound"
@@ -11,11 +12,19 @@ locations:
           - title: "Run away"
             xp: -5
             gold: -5
-        nearby:
-          - Dungeon
-          - Cavern
-
-
-  - title: Dungeon
-  - title: Cavern
-
+    nearby:
+      - Dungeon
+  - title: "Dungeon"
+    starting: False
+    events:
+      - title: "Trade weapons"
+        description: "Fight a three-headed hound"
+        actions:
+          - title: "Fight the monster"
+            xp: 10
+            gold: 5
+          - title: "Run away"
+            xp: -5
+            gold: -5
+    nearby:
+      - Castle
