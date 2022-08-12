@@ -2,30 +2,32 @@ title: "My Game"
 hero: "The Wanderer"
 locations:
   - title: "Castle"
-    starting: True
+    nearby:
+      - Dungeon
     events:
-      - title: "Fight Monster"
-        description: "Fight a three-headed hound"
+      - title: "Monster Appears"
+        description: "A knight clad in midievil armor reveals himselfs"
         actions:
           - title: "Fight the monster"
             xp: 10
             gold: 5
+            hp: -25
           - title: "Run away"
             xp: -5
             gold: -5
-    nearby:
-      - Dungeon
+            hp: 0
   - title: "Dungeon"
-    starting: False
+    nearby:
+      - Castle
     events:
       - title: "Trade weapons"
         description: "Fight a three-headed hound"
         actions:
-          - title: "Fight the monster"
-            xp: 10
-            gold: 5
-          - title: "Run away"
-            xp: -5
-            gold: -5
-    nearby:
-      - Castle
+          - title: "Trade sword for money"
+            xp: 20
+            gold: 100
+            hp: 0
+          - title: "Trade money for shield"
+            xp: 100
+            gold: -150
+            hp: 0

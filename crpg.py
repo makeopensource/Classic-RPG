@@ -2,22 +2,6 @@ import os
 import yaml
 
 
-class Location:
-    def __init__(self, config):
-        self.title = config['title']
-        self.events = config['events']
-
-    def landing(self):
-        while True:
-            print("You arrive at the " + self.title)
-            print("What would you like to do?")
-            event_list = [f"{i}] {x['title']}" for i, x in enumerate(self.events)]
-            print("\n".join(event_list))
-
-            chosen_event = input("Enter the event: ")
-            
-
-
 class Board:
     def __init__(self):
         self.current_location = None
