@@ -1,4 +1,5 @@
 title: "My Game"
+hero: "The Wanderer"
 locations:
   - title: "Castle"
     starting: True

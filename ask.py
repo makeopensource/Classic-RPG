@@ -8,41 +8,35 @@ class Ask:
 
     def __enter__(self):
         while True:
-            choice_list = [f"{i + 1}] {x}" for i, x in enumerate(self.choices)]
+            choice_list = [f"{i + 1}] {x['title']}" for i, x in enumerate(self.choices)]
             print("\n".join(choice_list))
             item = input(self.question + ": ")
 
             try:
-                self.choice_idx = int(item) - 1
-                self.choice = self.choices[self.choice_idx]
+                idx = int(item) - 1
+                self.choice = self.choices[idx]
                 return self
 
             except (ValueError,TypeError,IndexError):
                 print("Invalid input")
 
-    def get_location(self, game):
-        return game["locations"][self.choice_idx]
+    def get_choice(self):
+        return self.choice
 
-    def get_event(self, location):
-        return location["events"][self.choice_idx]
+    def __exit__(self, type, value, traceback):
+        pass
 
-    def get_action(self, event):
-        event = self.get_event(location)
-        return event["actions"][self.choice_idx]
+class Hero:
+    def __init__(self, name):
+        self.name = name
+        self.gold = 0
+        self.xp = 0
 
-
-def ask(question, choices):
-    choice_list = [f"{i + 1}] {x}" for i, x in enumerate(choices)]
-    print("\n".join(choice_list))
-    item = input(question + ": ")
-
-    try:
-        choice_idx = int(item) - 1
-        retval = choices[choice_idx]
-        return choice_idx, retval
-
-    except (ValueError,TypeError,IndexError):
-        raise ValueError("Invalid input")
+    def __str__(self):
+        return f"""{self.name}
+                gold: {self.gold}
+                xp: {self.xp}
+                """
 
 
 def get_titles(obj):
@@ -50,22 +44,18 @@ def get_titles(obj):
 
 
 game = yaml.safe_load(open("actions.yml", 'r'))
+hero = Hero(game["hero"])
 
+with Ask("choose a location", game["locations"]) as location_question:
+    location = location_question.get_choice()
 
+    while True:
+        with Ask("choose an event", location["events"]) as event_question:
+            event = event_question.get_choice()
 
-while True:
-    try:
-        locations = game["locations"]
-        idx, location = ask("choose a location", get_titles(locations))
-
-        events = locations[idx]["events"]
-        idx, event = ask("choose an event", get_titles(events))
-
-        actions = events[idx]["actions"]
-        idx, action = ask("choose an action", get_titles(actions))
-
-        print(actions[idx])
-        print("you have chosen to " + action)
-
-    except ValueError as e:
-        print(e)
+            with Ask("choose an action", event["actions"]) as action_question:
+                action = action_question.get_choice()
+                hero.gold += action["gold"]
+                hero.xp += action["xp"]
+                print("you chose to " + action["title"])
+                print(hero)
