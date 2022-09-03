@@ -1,119 +1,41 @@
-# A list of built-in nodes
+# Base player classes
 
-# A generic node. The node is the building block for the entire 
-# decision graph
-class Node:
-    def __init__(self, game, text):
-        self.text = text
-        self.parent = None
-        self.children = []
-        self.game = game
-
-    def list_children(self):
-        if self.children:
-            for i, child in enumerate(self.children):
-                print(f'{i + 1}) {child}')
-        else:
-            print('no options')
-
-    def add_child(self, node):
-        self.children.append(node)
-        node.parent = self
-
-    def add_children(self, nodes):
-        for child in nodes:
-            self.children.append(child)
-            child.parent = self
-
-    def rewind(self, n = 1):
-        for _ in range(n):
-            self.game.current = self.game.current.parent
-
-    def after(self):
-        raise NotImplementedError
-           
-    def __repr__(self):
-        return self.text
-
-
-# A generic player in the game. Adding features here exposes them
-# to the crpg API
 class Player:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.hp = 100
         self.xp = 0
-
-    def print_stats(self):
-        print(f'hp: {self.hp} xp: {self.xp}')
+        self.name = ''
 
     def __str__(self):
         return self.name
 
+# Base node classes
 
-# A location node. This node introduces the location (description)
-# when you enter the location
-class Location(Node):
-    def __init__(self, game, text, description = ''):
-        self.description = description
-        super().__init__(game, text)
+class Node:
+    def __init__(self, title, desc):
+        self.title = title
+        self.desc = desc
 
-    def after(self):
-        print(f'Welcome to {self.text}')
+    def on_select(self):
+        print(self.desc)
 
     def __str__(self):
-        return self.description
+        return self.title
 
 
-# A generic event. Events are the base of all player interactions.
-# Most interactions are event interactions
-class Event(Node):
-    def __init__(self, game, text, description):
-        self.description = description
-        super().__init__(game, text)
-
-    def after(self):
-        print(self.description)
+# Location behaves exactly like a Node
+class Location(Node):
+    pass
 
 
-# A type of action. Fighting reduces the hp, and increases the xp.
-# the param "rewind" tells the action how many places back to go.
+# Actions include the player for reference (augment player attributes)
+class Action(Node):
+    def __init__(self, title, desc, player):
+        self.player = player
+        super().__init__(title, desc)
 
-# Ideally, this implementation should not rely on rewinds, rather,
-# we should make new connections and follow them
+    def on_select(self):
+        super().on_select()
 
-# hp and xp could also be taken in as arguments for additional
-# customization
-class Fight(Node):
-    def __init__(self, game, text, rewind):
-        self.r = rewind
-        super().__init__(game, text)
-
-    def after(self):
-        player = self.game.player
-        player.hp -= 25
-        player.xp += 10
-        player.print_stats()
-        
-        self.rewind(self.r)
-
-
-# Similar to the "Fight" action, Run prevents the player from incurring
-# damage, at a cost to xp (and maybe money in the future?)
-
-# Similarly to Fight, rewind should not exist (ideally)
-
-# We also want to be able to *close* connections
-class Run(Node):
-
-    def __init__(self, game, text, rewind):
-        self.r = rewind
-        super().__init__(game, text)
-
-    def after(self):
-        player = self.game.player
-        player.xp = max(player.xp - 5, 0)
-
-        self.rewind(self.r)
 
 
