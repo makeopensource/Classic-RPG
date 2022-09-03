@@ -4,10 +4,9 @@ class Player:
     def __init__(self):
         self.hp = 100
         self.xp = 0
-        self.name = ''
 
-    def __str__(self):
-        return self.name
+    def summary(self):
+        return f'hp: {self.hp} xp: {self.xp}'
 
 # Base node classes
 
@@ -35,7 +34,20 @@ class Action(Node):
         super().__init__(title, desc)
 
     def on_select(self):
+        print(self.player.summary())
+
+
+class Fight(Action):
+    def on_select(self):
+        self.player.hp -= 25
+        self.player.xp += 10
+
         super().on_select()
 
 
+class Run(Action):
+    def on_select(self):
+        self.player.xp = max(self.player.xp - 10, 0)
+
+        super().on_select()
 

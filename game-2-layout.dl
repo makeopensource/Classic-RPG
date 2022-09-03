@@ -1,0 +1,21 @@
+1 | starting | castle | You wake up in the prison cell of an abandoned castle.
+2 | node | examine skeleton | You examine the skeleton of a corpse.
+3 | node | open cell gate | The cell gate is unlocked. You push it open.
+4 | node | left corridor | The corridor leads to an open door to the castle's courtyard.
+9 | location | courtyard | You enter the castle's courtyard.
+5 | node | right corridor | The corridor leads to a large flight of stairs to the dungeon.
+10 | location | dungeon | You enter the castle's dungeon.
+6 | node | scale stairs | A dragon swoops down from the sky, blocking your path.
+7 | fight | fight dragon | You vanquish the dragon.
+8 | run | run | You run from the dragon.
+---
+1 <-> 2
+1 -> 3
+3 -> 4
+3 -> 5
+4 -> 9
+5 -> 10
+9 -> 6
+6 -> 7
+6 -> 8
+7 -> 9

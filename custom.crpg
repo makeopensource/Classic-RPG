@@ -1,6 +1,0 @@
-1 | castle | You wake up in the prison cell of an abandoned castle.
-2 | examine skeleton | You examine the skeleton of a corpse.
-3 | open cell gate | The cell gate is unlocked. You push it open.
----
-1 <-> 2
-1 -> 3

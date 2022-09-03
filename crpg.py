@@ -1,18 +1,21 @@
 from setup import start
-import os
+import re
+from builtin import Node, Location, Fight, Run, Player
 
 # the base crpg game
 
 class Game:
-    def __init__(self, player, starting_location):
+    def __init__(self, player = Player(), starting_location = None):
         self.current = starting_location
-        starting_location.on_select()
         self.player = player
+        self.name = None
 
         self.nodes = set()
         self.connections = {}
 
-        self.add_node(starting_location)
+        self.add_node(self.current)
+
+    # establish nodes and connections
 
     def add_node(self, node):
         self.nodes.add(node)
@@ -28,21 +31,20 @@ class Game:
         self.add_oneway_connection(node_a, node_b)
         self.add_oneway_connection(node_b, node_a) 
 
+    # print connections to node
     def list_next(self):
         _next = self.connections[self.current]
         for i, node in enumerate(_next):
             print(f'{i+1}) {node}')
 
+    # Iterate through graph, ask for choices at each node
     def ask(self, query):
         if self.current not in self.connections:
             print("Exhausted all options...")
             exit(0)
 
         _next = self.connections[self.current]
-        if len(_next) == 1:
-            self.current = _next[0] 
-
-        elif len(_next) > 1: 
+        if len(_next) > 0: 
             while True:
                 self.list_next()
                 try:
@@ -59,14 +61,52 @@ class Game:
             print('Dead end')
 
     def start(self):
-        name = start()
-        self.player.name = name
-       
-        os.system("clear")
-        print(f'Welcome, {self.player}')
+        self.name = start()
+        print(f'Welcome, {self.name}')
+
         while self.player.hp > 0:
             self.ask('> ')
 
         print("GAME OVER")
 
+
+def generate(filename):
+    with open(filename, "r") as f:
+        contents = f.read()
+        nodes, connections = contents.split("\n---\n", maxsplit=1)
+
+        game = Game()
+
+        node_mapping = {}
+        n_types = {
+            "starting": Location,
+            "node": Node,
+            "location": Location,
+            "fight": Fight,
+            "run": Run
+        }
+
+        for node in nodes.split("\n"):
+            n, n_type, *args = re.split(r"\s*\|\s*", node)
+
+            if n_type == "fight" or n_type == "run":
+                args.append(game.player)
+
+            obj = n_types[n_type](*args)
+            if n_type == "starting":
+                game.current = obj
+
+            game.add_node(obj)
+            node_mapping[n] = obj
+
+        for connection in connections.strip("\n").split("\n"):
+            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
+            node_a = node_mapping[connection.group(1)]
+            node_b = node_mapping[connection.group(3)]
+            if connection.group(2) == "<->":
+                game.add_twoway_connection(node_a, node_b)
+            elif connection.group(2) == "->":
+                game.add_oneway_connection(node_a, node_b)
+
+        return game
 
