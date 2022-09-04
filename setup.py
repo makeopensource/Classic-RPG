@@ -1,32 +1,12 @@
 import random
-crpg = [
-    """
-    Welcome to
-
-            ,o888888o.    8 888888888o.   8 888888888o       ,o888888o.    
-           8888     `88.  8 8888    `88.  8 8888    `88.    8888     `88.  
-        ,8 8888       `8. 8 8888     `88  8 8888     `88 ,8 8888       `8. 
-        88 8888           8 8888     ,88  8 8888     ,88 88 8888           
-        88 8888           8 8888.   ,88'  8 8888.   ,88' 88 8888           
-        88 8888           8 888888888P'   8 888888888P'  88 8888           
-        88 8888           8 8888`8b       8 8888         88 8888   8888888 
-        `8 8888       .8' 8 8888 `8b.     8 8888         `8 8888       .8' 
-           8888     ,88'  8 8888   `8b.   8 8888            8888     ,88'  
-            `8888888P'    8 8888     `88. 8 8888             `8888888P'
-
-    """,
-    """
-      .,-:::::      :::::::..       ::::::::::.       .,-:::::/  
-    ,;;;``````      ;;;;``;;;;       `;;;```.;;;    ,;;-``````   
-    [[[              [[[,/[[[`        `]]nnn]]`     [[[   [[[[[[/
-    $$$              $$$$$$c           $$$``        `$$c.    `$$ 
-    `88bo,__,o,      888b `88bo,       888o          `Y8bo,,,o88o
-      `YUMMMMMP`     MMMM   `W`        YMMMb           ``YMUP`YMM
-    """
-]
+from pyfiglet import Figlet
+fonts = ["6x9", "banner", "big", "block", "bubble", "chartr", "chartri", "cour", "digital", "helv", "ivrit", "lean", "mini", "mnemonic", "sbook", "script", "shadow", "slant", "small", "smscript", "smshadow", "smslant", "standard", "term", "times", "xchartr"]
 
 def start():
-    print(crpg[random.randint(0, len(crpg) - 1)])
+    font_idx = random.randint(0, len(fonts) - 1)
+    f = Figlet(font=fonts[font_idx])
+    print(f.renderText('Classic RPG'))
+
     while True:
         print("Greetings traveller, what is your name?")
         name = input("> ")
@@ -35,5 +15,4 @@ def start():
         ready = input("> ")
         if ready.lower() == "y" or ready.lower() == "yes":
             return name
-
 
