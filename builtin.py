@@ -11,7 +11,7 @@ class Player:
 # Base node classes
 
 class Node:
-    def __init__(self, title, desc):
+    def __init__(self, title: str, desc: str):
         self.title = title
         self.desc = desc
 
@@ -29,7 +29,7 @@ class Location(Node):
 
 # Actions include the player for reference (augment player attributes)
 class Action(Node):
-    def __init__(self, title, desc, player):
+    def __init__(self, title: str, desc: str, player: Player):
         self.player = player
         super().__init__(title, desc)
 

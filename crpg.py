@@ -5,29 +5,29 @@ from builtin import Node, Location, Fight, Run, Player
 # the base crpg game
 
 class Game:
-    def __init__(self, player = Player(), starting_location = None):
+    def __init__(self, player: Player = Player(), starting_location: Location = None):
         self.current = starting_location
         self.player = player
-        self.name = None
+        self.name: str = None
 
-        self.nodes = set()
-        self.connections = {}
-
+        self.nodes: set[Node] = set()
+        self.connections: dict[Node, list[Node]] = {}
+        
         self.add_node(self.current)
 
     # establish nodes and connections
 
-    def add_node(self, node):
+    def add_node(self, node: Node):
         self.nodes.add(node)
 
-    def add_oneway_connection(self, node_a, node_b):
+    def add_oneway_connection(self, node_a: Node, node_b: Node):
         assert node_a in self.nodes
         assert node_b in self.nodes
 
         # adding node_a to list of connections
         self.connections[node_a] = self.connections.get(node_a, []) + [node_b]
 
-    def add_twoway_connection(self, node_a, node_b):
+    def add_twoway_connection(self, node_a: Node, node_b: Node):
         self.add_oneway_connection(node_a, node_b)
         self.add_oneway_connection(node_b, node_a) 
 
@@ -38,7 +38,7 @@ class Game:
             print(f'{i+1}) {node}')
 
     # Iterate through graph, ask for choices at each node
-    def ask(self, query):
+    def ask(self, query: str):
         if self.current not in self.connections:
             print("Exhausted all options...")
             exit(0)
