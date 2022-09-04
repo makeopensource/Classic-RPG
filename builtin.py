@@ -1,3 +1,4 @@
+from __future__ import annotations #needed for Node type hints
 # Base player classes
 
 class Player:
@@ -11,12 +12,16 @@ class Player:
 # Base node classes
 
 class Node:
-    def __init__(self, title, desc):
+    def __init__(self, title: str, desc: str):
         self.title = title
         self.desc = desc
+        self.connections: list[Node] = []
 
     def on_select(self):
         print(self.desc)
+
+    def add_connection(self, other: Node):
+        self.connections += [other]
 
     def __str__(self):
         return self.title
@@ -29,7 +34,7 @@ class Location(Node):
 
 # Actions include the player for reference (augment player attributes)
 class Action(Node):
-    def __init__(self, title, desc, player):
+    def __init__(self, title: str, desc: str, player: Player):
         self.player = player
         super().__init__(title, desc)
 
@@ -50,4 +55,3 @@ class Run(Action):
         self.player.xp = max(self.player.xp - 10, 0)
 
         super().on_select()
-
