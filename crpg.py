@@ -6,17 +6,15 @@ from builtin import Node, Location, Fight, Run, Player
 
 class Game:
     def __init__(self, player: Player = Player(), starting_location: Location = None):
-        self.current = starting_location
+        self.current: Node = starting_location
         self.player = player
         self.name: str = None
 
         self.nodes: set[Node] = set()
-        self.connections: dict[Node, list[Node]] = {}
         
         self.add_node(self.current)
 
     # establish nodes and connections
-
     def add_node(self, node: Node):
         self.nodes.add(node)
 
@@ -24,41 +22,44 @@ class Game:
         assert node_a in self.nodes
         assert node_b in self.nodes
 
-        # adding node_a to list of connections
-        self.connections[node_a] = self.connections.get(node_a, []) + [node_b]
+        node_a.add_connection(node_b)
 
     def add_twoway_connection(self, node_a: Node, node_b: Node):
-        self.add_oneway_connection(node_a, node_b)
-        self.add_oneway_connection(node_b, node_a) 
+        assert node_a in self.nodes
+        assert node_b in self.nodes
+
+        node_a.add_connection(node_b)
+        node_b.add_connection(node_a)
 
     # print connections to node
     def list_next(self):
-        _next = self.connections[self.current]
+        _next = self.current.connections
         for i, node in enumerate(_next):
             print(f'{i+1}) {node}')
 
     # Iterate through graph, ask for choices at each node
     def ask(self, query: str):
-        if self.current not in self.connections:
+        if len(self.current.connections) == 0:
             print("Exhausted all options...")
             exit(0)
 
-        _next = self.connections[self.current]
-        if len(_next) > 0: 
-            while True:
-                self.list_next()
-                try:
-                    choice = int(input(f'{query}'))
-                except ValueError:
-                    print('Please enter a number. Try again.')
-                    continue 
+        _next = self.current.connections
+        while True:
+            self.list_next()
+            try:
+                choice = int(input(f'{query}'))
+            except ValueError:
+                print('Please enter a number. Try again.')
+                continue 
+
+            # check for valid choice
+            if (choice <= len(_next) and choice > 0):
                 break
+            else:
+                print('Please enter a valid number. Try again.')
 
-            self.current = _next[choice - 1]
-            self.current.on_select()
-
-        else:
-            print('Dead end')
+        self.current = _next[choice - 1]
+        self.current.on_select()
 
     def start(self):
         self.name = start()
