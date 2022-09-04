@@ -12,10 +12,10 @@ class Player:
 # Base node classes
 
 class Node:
-    def __init__(self, title: str, desc: str, connections: list[Node] = []):
+    def __init__(self, title: str, desc: str):
         self.title = title
         self.desc = desc
-        self.connections = connections
+        self.connections: list[Node] = []
 
     def on_select(self):
         print(self.desc)
