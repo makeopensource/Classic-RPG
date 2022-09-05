@@ -1,79 +1,113 @@
-import os
-import yaml
+from setup import start
+import re
+from builtin import Node, Location, Fight, Run, Player
 
-
-class Board:
-    def __init__(self):
-        self.current_location = None
-        self.locations = {}
-        self.connections = {}
-
-    def add_location(self, location: Location, starting=False):
-        if starting:
-            self.current_location = location  # set current location
-
-        self.locations[location.title] = location  # create location mapping
-        self.connections[location.title] = set()  # init location connections
-
-    def add_oneway_connection(self, location_a: str, location_b: str):
-        self.connections[location_a].add(location_b)  # add location_a -> location_b
-
-    def add_twoway_connection(self, location_a: str, location_b: str):
-        self.connections[location_a].add(location_b)  # add location_a -> location_b
-        self.connections[location_b].add(location_a)  # add location_b -> location_a
-
-    def adjacent_locations(self):
-        return list(self.connections[self.current_location.title])
-
-    def move_to_location(self, new_location):
-        assert new_location in self.locations  # check new_location exists
-        assert new_location in self.connections[self.current_location.title]  # check current_location -> new_location exists
-        self.current_location = self.locations[new_location]
-        self.current_location.landing()
-
+# the base crpg game
 
 class Game:
-    def __init__(self, filename):
-        self.config = yaml.safe_load(open(filename, 'r'))
-        self.board = Board()
-        self.title = self.config['title']
-        print(self.config)
-        for location in self.config['locations']:
+    def __init__(self, player: Player = Player(), starting_location: Location = None):
+        self.current: Node = starting_location
+        self.player = player
+        self.name: str = None
 
-            # add location to board
-            new_location: Location = Location(location)
-            self.board.add_location(new_location, location['starting'])
+        self.nodes: set[Node] = set()
+        
+        self.add_node(self.current)
 
-            # add nearby connections to board
-            for nearby in location['nearby']:
-                self.board.add_oneway_connection(location['title'], nearby)
-        print(self.config)
+    # establish nodes and connections
+    def add_node(self, node: Node):
+        self.nodes.add(node)
+
+    def add_oneway_connection(self, node_a: Node, node_b: Node):
+        assert node_a in self.nodes
+        assert node_b in self.nodes
+
+        node_a.add_connection(node_b)
+
+    def add_twoway_connection(self, node_a: Node, node_b: Node):
+        assert node_a in self.nodes
+        assert node_b in self.nodes
+
+        node_a.add_connection(node_b)
+        node_b.add_connection(node_a)
+
+    # print connections to node
+    def list_next(self):
+        _next = self.current.connections
+        for i, node in enumerate(_next):
+            print(f'{i+1}) {node}')
+
+    # Iterate through graph, ask for choices at each node
+    def ask(self, query: str):
+        if len(self.current.connections) == 0:
+            print("Exhausted all options...")
+            exit(0)
+
+        _next = self.current.connections
+        while True:
+            self.list_next()
+            try:
+                choice = int(input(f'{query}'))
+            except ValueError:
+                print('Please enter a number. Try again.')
+                continue 
+
+            # check for valid choice
+            if (choice <= len(_next) and choice > 0):
+                break
+            else:
+                print('Please enter a valid number. Try again.')
+
+        self.current = _next[choice - 1]
+        self.current.on_select()
 
     def start(self):
-        while True:
-            adjacent_locations = self.board.adjacent_locations()
-            if len(adjacent_locations) == 0:
-                print("You reached a dead end, Game Over!")
-                exit(0)
+        self.name = start()
+        print(f'Welcome, {self.name}')
 
-            locations = [f'{i+1}] {x}' for i, x in enumerate(adjacent_locations)]
-            print('\n'.join(locations))
+        while self.player.hp > 0:
+            self.ask('> ')
 
-            try:
-                n = int(input("Pick a path: "))
+        print("GAME OVER")
 
-            except KeyboardInterrupt:
-                print("\nThanks for playing!")
-                exit(0)
 
-            except (TypeError,ValueError):
-                n = 0
+def generate(filename):
+    with open(filename, "r") as f:
+        contents = f.read()
+        nodes, connections = contents.split("\n---\n", maxsplit=1)
 
-            try:
-                assert n > 0
-                new_location = adjacent_locations[n - 1]
-                self.board.move_to_location(new_location)
+        game = Game()
 
-            except AssertionError:
-                print("Invalid input")
+        node_mapping = {}
+        n_types = {
+            "starting": Location,
+            "node": Node,
+            "location": Location,
+            "fight": Fight,
+            "run": Run
+        }
+
+        for node in nodes.split("\n"):
+            n, n_type, *args = re.split(r"\s*\|\s*", node)
+
+            if n_type == "fight" or n_type == "run":
+                args.append(game.player)
+
+            obj = n_types[n_type](*args)
+            if n_type == "starting":
+                game.current = obj
+
+            game.add_node(obj)
+            node_mapping[n] = obj
+
+        for connection in connections.strip("\n").split("\n"):
+            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
+            node_a = node_mapping[connection.group(1)]
+            node_b = node_mapping[connection.group(3)]
+            if connection.group(2) == "<->":
+                game.add_twoway_connection(node_a, node_b)
+            elif connection.group(2) == "->":
+                game.add_oneway_connection(node_a, node_b)
+
+        return game
 
