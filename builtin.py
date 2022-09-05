@@ -21,7 +21,7 @@ class Connection:
         pass
 
     def __str__(self):
-        return str(self.to_node)
+        return str(self.from_node) + " -> " + str(self.to_node)
 
 # Breaking connections can only be used once
 class BreakingConnection(Connection):
@@ -30,6 +30,9 @@ class BreakingConnection(Connection):
         
     def on_select(self):
         self.from_node.connections.remove(self)
+
+    def __str__(self):
+        return str(self.from_node) + " \-> " + str(self.to_node)
 
 
 # Base node classes

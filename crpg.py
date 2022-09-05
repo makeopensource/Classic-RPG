@@ -27,8 +27,8 @@ class Game:
     # print connections to node
     def list_next(self):
         _next = self.current.connections
-        for i, node in enumerate(_next):
-            print(f'{i+1}) {node}')
+        for i, connection in enumerate(_next):
+            print(f'{i+1}) {connection.to_node}')
 
     # Iterate through graph, ask for choices at each node
     def ask(self, query: str):
