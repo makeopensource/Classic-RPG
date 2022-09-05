@@ -1,7 +1,7 @@
 from setup import start
 import re
 from builtin import Node, Location, Fight, Run, Player
-
+GameTitle = ""
 # the base crpg game
 
 class Game:
@@ -62,7 +62,7 @@ class Game:
         self.current.on_select()
 
     def start(self):
-        self.name = start()
+        self.name = start(GameTitle)
         print(f'Welcome, {self.name}')
 
         while self.player.hp > 0:
@@ -72,7 +72,7 @@ class Game:
 
 
 def generate(filename):
-    with open(filename, "r") as f:
+    with open("GameLibary/" + filename, "r") as f:
         contents = f.read()
         nodes, connections = contents.split("\n---\n", maxsplit=1)
 
@@ -86,6 +86,9 @@ def generate(filename):
             "fight": Fight,
             "run": Run
         }
+        global GameTitle
+        GameTitle = filename[:-3]
+        print(GameTitle)
 
         for node in nodes.split("\n"):
             n, n_type, *args = re.split(r"\s*\|\s*", node)
