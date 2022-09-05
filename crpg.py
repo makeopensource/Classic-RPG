@@ -1,6 +1,6 @@
 from setup import start
 import re
-from builtin import Node, Location, Fight, Run, Player
+from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
 
 # the base crpg game
 
@@ -18,18 +18,11 @@ class Game:
     def add_node(self, node: Node):
         self.nodes.add(node)
 
-    def add_oneway_connection(self, node_a: Node, node_b: Node):
-        assert node_a in self.nodes
-        assert node_b in self.nodes
+    def add_connection(self, from_node: Node, to_node: Node, connection_type: Connection = Connection):
+        assert from_node in self.nodes
+        assert to_node in self.nodes
 
-        node_a.add_connection(node_b)
-
-    def add_twoway_connection(self, node_a: Node, node_b: Node):
-        assert node_a in self.nodes
-        assert node_b in self.nodes
-
-        node_a.add_connection(node_b)
-        node_b.add_connection(node_a)
+        from_node.add_connection(to_node, connection_type)
 
     # print connections to node
     def list_next(self):
@@ -58,8 +51,7 @@ class Game:
             else:
                 print('Please enter a valid number. Try again.')
 
-        self.current = _next[choice - 1]
-        self.current.on_select()
+        self.current = self.current.advance(choice - 1)
 
     def start(self):
         self.name = start()
@@ -78,7 +70,7 @@ def generate(filename):
 
         game = Game()
 
-        node_mapping = {}
+        node_mapping: dict[str, Node] = {}
         n_types = {
             "starting": Location,
             "node": Node,
@@ -104,10 +96,38 @@ def generate(filename):
             connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
             node_a = node_mapping[connection.group(1)]
             node_b = node_mapping[connection.group(3)]
-            if connection.group(2) == "<->":
-                game.add_twoway_connection(node_a, node_b)
-            elif connection.group(2) == "->":
-                game.add_oneway_connection(node_a, node_b)
+            if "\->" in connection.group(2):
+                game.add_connection(node_a, node_b, BreakingConnection)
+            elif "->" in connection.group(2):
+                game.add_connection(node_a, node_b)
+
+            if "<-/" in connection.group(2):
+                game.add_connection(node_b, node_a, BreakingConnection)
+            elif "<-" in connection.group(2):
+                game.add_connection(node_b, node_a)
+           
 
         return game
 
+# .dl connection cheatsheet
+#
+# a -> b    basic connection from a to b
+# a <- b    basic connection from b to a
+# a <-> b   two-way connection between a and b
+# a \-> b   breaking connection from a to b
+# a <-/ b   breaking connection from b to a
+#
+#
+# compound connections
+#
+# a <-\-> b     basic from b to a, breaking from a to b
+# a <-/-> b     basic from a to b, breaking from b to a
+# a <-/\-> b    breaking connections between a and b
+#
+#
+# abnormal syntaxes (do not use)
+#
+# a -><- b  two-way connection between a and b
+# a \-><-/  breaking connections between a and b
+# a <->\->  basic from b to a, breaking from a to b
+# etc...
