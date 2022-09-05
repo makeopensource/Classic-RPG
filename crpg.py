@@ -94,40 +94,22 @@ def generate(filename):
 
         for connection in connections.strip("\n").split("\n"):
             connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
+
             node_a = node_mapping[connection.group(1)]
             node_b = node_mapping[connection.group(3)]
-            if "\->" in connection.group(2):
-                game.add_connection(node_a, node_b, BreakingConnection)
-            elif "->" in connection.group(2):
-                game.add_connection(node_a, node_b)
 
-            if "<-/" in connection.group(2):
-                game.add_connection(node_b, node_a, BreakingConnection)
-            elif "<-" in connection.group(2):
+            if (connection.group(2) == "->"):
+                game.add_connection(node_a, node_b)
+            elif (connection.group(2) == "<->"):
+                game.add_connection(node_a, node_b)
                 game.add_connection(node_b, node_a)
-           
+            elif (connection.group(2) == "\->"):
+                game.add_connection(node_a, node_b, BreakingConnection)
+            elif (connection.group(2) == "<-\->"):
+                game.add_connection(node_a, node_b, BreakingConnection)
+                game.add_connection(node_b, node_a)
+            elif (connection.group(2) == "<-/\->"):
+                game.add_connection(node_a, node_b, BreakingConnection)
+                game.add_connection(node_b, node_a, BreakingConnection)
 
         return game
-
-# .dl connection cheatsheet
-#
-# a -> b    basic connection from a to b
-# a <- b    basic connection from b to a
-# a <-> b   two-way connection between a and b
-# a \-> b   breaking connection from a to b
-# a <-/ b   breaking connection from b to a
-#
-#
-# compound connections
-#
-# a <-\-> b     basic from b to a, breaking from a to b
-# a <-/-> b     basic from a to b, breaking from b to a
-# a <-/\-> b    breaking connections between a and b
-#
-#
-# abnormal syntaxes (do not use)
-#
-# a -><- b  two-way connection between a and b
-# a \-><-/  breaking connections between a and b
-# a <->\->  basic from b to a, breaking from a to b
-# etc...
