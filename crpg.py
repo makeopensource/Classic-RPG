@@ -124,7 +124,4 @@ def generate(filename):
             else:
                 raise ConnectionError("Invalid .dl connection input")
 
-
-            
-
         return game
