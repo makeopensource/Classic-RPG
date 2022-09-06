@@ -9,19 +9,51 @@ class Player:
     def summary(self):
         return f'hp: {self.hp} xp: {self.xp}'
 
+
+# Base connection classes
+
+class Connection:
+    def __init__(self, from_node: Node, to_node: Node):
+        self.from_node = from_node
+        self.to_node = to_node
+
+    def on_select(self):
+        pass
+
+    def __str__(self):
+        return str(self.from_node) + " -> " + str(self.to_node)
+
+# Breaking connections can only be used once
+class BreakingConnection(Connection):
+    def __init__(self, from_node: Node, to_node: Node):
+        super().__init__(from_node, to_node)
+        
+    def on_select(self):
+        self.from_node.connections.remove(self)
+
+    def __str__(self):
+        return str(self.from_node) + " \-> " + str(self.to_node)
+
+
 # Base node classes
 
 class Node:
     def __init__(self, title: str, desc: str):
         self.title = title
         self.desc = desc
-        self.connections: list[Node] = []
+        self.connections: list[Connection] = []
 
     def on_select(self):
         print(self.desc)
 
-    def add_connection(self, other: Node):
-        self.connections += [other]
+    def add_connection(self, other: Node, type: Connection = Connection):
+        self.connections += [type(self, other)]
+
+    def advance(self, index: int) -> Node:
+        connection = self.connections[index]
+        connection.on_select()
+        connection.to_node.on_select()
+        return connection.to_node
 
     def __str__(self):
         return self.title
