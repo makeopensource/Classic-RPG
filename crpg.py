@@ -1,3 +1,4 @@
+from typing import Callable # for connection function type hints
 from setup import start
 import re
 from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
@@ -23,6 +24,13 @@ class Game:
         assert to_node in self.nodes
 
         from_node.add_connection(to_node, connection_type)
+
+    def add_twoway_connection(self, node_a: Node, node_b: Node, connection_type_a: Connection = Connection, connection_type_b: Connection = Connection):
+        assert node_a in self.nodes
+        assert node_b in self.nodes
+
+        node_a.add_connection(node_b, connection_type_a)
+        node_b.add_connection(node_a, connection_type_b)
 
     # print connections to node
     def list_next(self):
@@ -79,6 +87,15 @@ def generate(filename):
             "run": Run
         }
 
+        c_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
+            "->": lambda game, node_a, node_b: game.add_connection(node_a, node_b),
+            "\->": lambda game, node_a, node_b: game.add_connection(node_a, node_b, BreakingConnection),
+            "<->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b),
+            "<-\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection),
+            "<-/->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, Connection, BreakingConnection),
+            "<-/\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection, BreakingConnection),
+        }
+
         for node in nodes.split("\n"):
             n, n_type, *args = re.split(r"\s*\|\s*", node)
 
@@ -93,23 +110,21 @@ def generate(filename):
             node_mapping[n] = obj
 
         for connection in connections.strip("\n").split("\n"):
-            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
+            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)\s*$", connection, re.MULTILINE)
+
+            if connection is None or '' in connection.groups():
+                raise ConnectionError("Invalid .dl connection input")
 
             node_a = node_mapping[connection.group(1)]
             node_b = node_mapping[connection.group(3)]
 
-            if (connection.group(2) == "->"):
-                game.add_connection(node_a, node_b)
-            elif (connection.group(2) == "<->"):
-                game.add_connection(node_a, node_b)
-                game.add_connection(node_b, node_a)
-            elif (connection.group(2) == "\->"):
-                game.add_connection(node_a, node_b, BreakingConnection)
-            elif (connection.group(2) == "<-\->"):
-                game.add_connection(node_a, node_b, BreakingConnection)
-                game.add_connection(node_b, node_a)
-            elif (connection.group(2) == "<-/\->"):
-                game.add_connection(node_a, node_b, BreakingConnection)
-                game.add_connection(node_b, node_a, BreakingConnection)
+            c_func = c_funcs.get(connection.group(2))
+            if c_func is not None:
+                c_func(game, node_a, node_b)
+            else:
+                raise ConnectionError("Invalid .dl connection input")
+
+
+            
 
         return game

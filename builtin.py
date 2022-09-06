@@ -10,7 +10,7 @@ class Player:
         return f'hp: {self.hp} xp: {self.xp}'
 
 
-# Base connections classes
+# Base connection classes
 
 class Connection:
     def __init__(self, from_node: Node, to_node: Node):
