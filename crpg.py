@@ -1,15 +1,14 @@
 from setup import start
 import re
 from builtin import Node, Location, Fight, Run, Player
-GameTitle = ""
 # the base crpg game
 
 class Game:
-    def __init__(self, player: Player = Player(), starting_location: Location = None):
+    def __init__(self, gameTitle,  player: Player = Player(), starting_location: Location = None):
         self.current: Node = starting_location
         self.player = player
         self.name: str = None
-
+        self.gameTitle = gameTitle
         self.nodes: set[Node] = set()
         
         self.add_node(self.current)
@@ -60,9 +59,9 @@ class Game:
 
         self.current = _next[choice - 1]
         self.current.on_select()
-
+    
     def start(self):
-        self.name = start(GameTitle)
+        self.name = start(self.gameTitle)
         print(f'Welcome, {self.name}')
 
         while self.player.hp > 0:
@@ -72,11 +71,11 @@ class Game:
 
 
 def generate(filename):
-    with open("GameLibary/" + filename, "r") as f:
+    with open("game_libary/" + filename, "r") as f:
         contents = f.read()
         nodes, connections = contents.split("\n---\n", maxsplit=1)
 
-        game = Game()
+        game = Game(filename[:-3])
 
         node_mapping = {}
         n_types = {
@@ -86,9 +85,6 @@ def generate(filename):
             "fight": Fight,
             "run": Run
         }
-        global GameTitle
-        GameTitle = filename[:-3]
-        print(GameTitle)
 
         for node in nodes.split("\n"):
             n, n_type, *args = re.split(r"\s*\|\s*", node)
