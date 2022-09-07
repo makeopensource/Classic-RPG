@@ -1,13 +1,52 @@
+from email.policy import default
+from importlib.resources import path
 from operator import le
 import os
 import textwrap
 from pyfiglet import Figlet
+import click
+from crpg import generate
+import click
+from operator import mul
+from functools import reduce
+from os.path import exists
 
+#Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
+@click.command()
+@click.option("--path", default="game_libary/", help="provide full file path to game file not under game_libary")
+def start(path):
+    print(path)
+    #Possible could be more elegant, checks if user specified path; if path exist runs it
+    if(path == "game_libary/"):
+        dl = selectDL(path)
+    else:
+        defualtChosen=False
+        while((not exists(path)) and (not defualtChosen)):
+            print("Could not locate file, either try again(0) or run default(1)")
+            userIn = getUserInput(2)
+            if(userIn == "1"):
+                defualtChosen=True
+            else:
+                print("Enter file Path")
+                path = str(input())    
+        if(defualtChosen):
+            path = "game_libary/"
+            dl = selectDL(path)
+        else:
+            dl = path
+
+    if( str(dl) != "-1"):
+        game = generate(dl)
+        game.start()
+    else:
+        print("Exiting")
+        exit()
 
 #Read all dl files located in GameLibary, lists them to user, and return level chosen by user to game generate
-def selectDL():
+
+
+def selectDL(path):
     bannerPrinter()
-    path = "game_libary"
     dir_list = os.listdir(path)
     count = 0
     options = "(0) - Exit\n"
@@ -16,15 +55,11 @@ def selectDL():
         options += "(" +str(count)+ ") - " + dl +"\n"
     print("Please choose from the following options\n"+'_'*45)
     print(options)
-    userIn = str(input())
-    while inputCheck(userIn , count):
-        print("Please choose from the following options\n"+'_'*45)
-        print(options)
-        userIn = str(input())
+    userIn = getUserInput(count)
     if(int(userIn) == 0):
         return -1
     else :
-        return dir_list[int(userIn)-1]
+        return path + "/" +dir_list[int(userIn)-1]
 
 #Prints Intro Banner - a bit messy
 def bannerPrinter():
@@ -43,5 +78,15 @@ def inputCheck(value , lenght):
         return not ((-1 < int(value) ) and (int(value)<lenght+1))
     else:
         return True
+
+def getUserInput( lenght):
+    userIn = str(input())
+    while inputCheck(userIn , lenght):
+        print("Please choose from the following options\n"+'_'*45)
+        print(options)
+        userIn = str(input())
+    return userIn
+
     
- 
+if __name__ == '__main__':
+    start()

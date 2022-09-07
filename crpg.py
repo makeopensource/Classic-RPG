@@ -71,11 +71,14 @@ class Game:
 
 
 def generate(filename):
-    with open("game_libary/" + filename, "r") as f:
+    with open(filename, "r") as f:
         contents = f.read()
         nodes, connections = contents.split("\n---\n", maxsplit=1)
 
-        game = Game(filename[:-3])
+        if(filename.find('/')!=-1):
+            game = Game(filename[filename.find('/')+1:-3])
+        else:
+            game = Game(filename[:-3])
 
         node_mapping = {}
         n_types = {
