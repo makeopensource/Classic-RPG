@@ -6,14 +6,12 @@ import textwrap
 from pyfiglet import Figlet
 import click
 from crpg import generate
-import click
 from operator import mul
 from functools import reduce
-from os.path import exists
 
 #Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
 @click.command()
-@click.option("--path", default="game_libary/", help="provide full file path to game file not under game_libary")
+@click.option("--path", default="game_libary/", help="Provide file path to a .dl file not located under /game_libary")
 def start(path):
     print(path)
     #Possible could be more elegant, checks if user specified path; if path exist runs it
