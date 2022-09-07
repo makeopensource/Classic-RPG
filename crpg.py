@@ -1,6 +1,7 @@
+from typing import Callable # for connection function type hints
 from setup import start
 import re
-from builtin import Node, Location, Fight, Run, Player
+from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
 # the base crpg game
 
 class Game:
@@ -17,24 +18,24 @@ class Game:
     def add_node(self, node: Node):
         self.nodes.add(node)
 
-    def add_oneway_connection(self, node_a: Node, node_b: Node):
+    def add_connection(self, from_node: Node, to_node: Node, connection_type: Connection = Connection):
+        assert from_node in self.nodes
+        assert to_node in self.nodes
+
+        from_node.add_connection(to_node, connection_type)
+
+    def add_twoway_connection(self, node_a: Node, node_b: Node, connection_type_a: Connection = Connection, connection_type_b: Connection = Connection):
         assert node_a in self.nodes
         assert node_b in self.nodes
 
-        node_a.add_connection(node_b)
-
-    def add_twoway_connection(self, node_a: Node, node_b: Node):
-        assert node_a in self.nodes
-        assert node_b in self.nodes
-
-        node_a.add_connection(node_b)
-        node_b.add_connection(node_a)
+        node_a.add_connection(node_b, connection_type_a)
+        node_b.add_connection(node_a, connection_type_b)
 
     # print connections to node
     def list_next(self):
         _next = self.current.connections
-        for i, node in enumerate(_next):
-            print(f'{i+1}) {node}')
+        for i, connection in enumerate(_next):
+            print(f'{i+1}) {connection.to_node}')
 
     # Iterate through graph, ask for choices at each node
     def ask(self, query: str):
@@ -56,10 +57,8 @@ class Game:
                 break
             else:
                 print('Please enter a valid number. Try again.')
+        self.current = self.current.advance(choice - 1)
 
-        self.current = _next[choice - 1]
-        self.current.on_select()
-    
     def start(self):
         self.name = start(self.gameTitle)
         print(f'Welcome, {self.name}')
@@ -80,13 +79,22 @@ def generate(filename):
         else:
             game = Game(filename[:-3])
 
-        node_mapping = {}
+        node_mapping: dict[str, Node] = {}
         n_types = {
             "starting": Location,
             "node": Node,
             "location": Location,
             "fight": Fight,
             "run": Run
+        }
+
+        c_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
+            "->": lambda game, node_a, node_b: game.add_connection(node_a, node_b),
+            "\->": lambda game, node_a, node_b: game.add_connection(node_a, node_b, BreakingConnection),
+            "<->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b),
+            "<-\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection),
+            "<-/->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, Connection, BreakingConnection),
+            "<-/\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection, BreakingConnection),
         }
 
         for node in nodes.split("\n"):
@@ -103,13 +111,18 @@ def generate(filename):
             node_mapping[n] = obj
 
         for connection in connections.strip("\n").split("\n"):
-            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)$", connection, re.MULTILINE)
+            connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)\s*$", connection, re.MULTILINE)
+
+            if connection is None or '' in connection.groups():
+                raise ConnectionError("Invalid .dl connection input")
+
             node_a = node_mapping[connection.group(1)]
             node_b = node_mapping[connection.group(3)]
-            if connection.group(2) == "<->":
-                game.add_twoway_connection(node_a, node_b)
-            elif connection.group(2) == "->":
-                game.add_oneway_connection(node_a, node_b)
+
+            c_func = c_funcs.get(connection.group(2))
+            if c_func is not None:
+                c_func(game, node_a, node_b)
+            else:
+                raise ConnectionError("Invalid .dl connection input")
 
         return game
-
