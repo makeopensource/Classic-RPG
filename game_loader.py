@@ -4,12 +4,13 @@ from operator import le
 from operator import mul
 import os
 import textwrap
-from pyfiglet import Figlet
 import click
+from pyfiglet import Figlet
 from crpg import generate
 from functools import reduce
+from os.path import exists
 
-#Allows adding specifications when starting program; at the moment, only added the abitly to specify exact file path for .dl
+#Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
 @click.command()
 @click.option("--path", default="game_libary/", help="Provide file path to a .dl file not located under /game_libary")
 def start(path):
@@ -41,7 +42,8 @@ def start(path):
         exit()
 
 #Read all dl files located in GameLibary, lists them to user, and return level chosen by user to game generate
-#Prints all files in given path, and passes seeted file path back
+
+#Prints all files in given path, and passes seeted file path
 def selectDL(path):
     bannerPrinter()
     dir_list = os.listdir(path)
