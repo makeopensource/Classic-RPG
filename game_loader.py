@@ -1,15 +1,15 @@
 from email.policy import default
 from importlib.resources import path
 from operator import le
+from operator import mul
 import os
 import textwrap
 from pyfiglet import Figlet
 import click
 from crpg import generate
-from operator import mul
 from functools import reduce
 
-#Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
+#Allows adding specifications when starting program; at the moment, only added the abitly to specify exact file path for .dl
 @click.command()
 @click.option("--path", default="game_libary/", help="Provide file path to a .dl file not located under /game_libary")
 def start(path):
@@ -41,8 +41,7 @@ def start(path):
         exit()
 
 #Read all dl files located in GameLibary, lists them to user, and return level chosen by user to game generate
-
-
+#Prints all files in given path, and passes seeted file path back
 def selectDL(path):
     bannerPrinter()
     dir_list = os.listdir(path)
@@ -76,7 +75,7 @@ def inputCheck(value , lenght):
         return not ((-1 < int(value) ) and (int(value)<lenght+1))
     else:
         return True
-
+#Handles aceeting user input and checking it is valid
 def getUserInput( lenght):
     userIn = str(input())
     while inputCheck(userIn , lenght):
@@ -85,6 +84,6 @@ def getUserInput( lenght):
         userIn = str(input())
     return userIn
 
-    
+#Set up for Python Click
 if __name__ == '__main__':
     start()
