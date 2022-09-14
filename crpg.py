@@ -73,11 +73,7 @@ def generate(filename):
     with open(filename, "r") as f:
         contents = f.read()
         nodes, connections = contents.split("\n---\n", maxsplit=1)
-
-        if(filename.find('/')!=-1):
-            game = Game(filename[filename.find('/')+1:-3])
-        else:
-            game = Game(filename[:-3])
+        game = Game(filename)
 
         node_mapping: dict[str, Node] = {}
         n_types = {

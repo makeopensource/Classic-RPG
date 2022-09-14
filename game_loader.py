@@ -12,11 +12,10 @@ from os.path import exists
 
 #Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
 @click.command()
-@click.option("--path", default="game_libary/", help="Provide file path to a .dl file not located under /game_libary")
+@click.option("--path", default="game_libary", help="Provide file path to a .dl file not located under /game_libary")
 def start(path):
-    print(path)
     #Possible could be more elegant, checks if user specified path; if path exist runs it
-    if(path == "game_libary/"):
+    if(path == "game_libary"):
         dl = selectDL(path)
     else:
         defualtChosen=False
@@ -29,7 +28,7 @@ def start(path):
                 print("Enter file Path")
                 path = str(input())    
         if(defualtChosen):
-            path = "game_libary/"
+            path = "game_libary"
             dl = selectDL(path)
         else:
             dl = path
@@ -39,7 +38,7 @@ def start(path):
         game.start()
     else:
         print("Exiting")
-        exit()
+        exit(0)
 
 #Read all dl files located in GameLibary, lists them to user, and return level chosen by user to game generate
 

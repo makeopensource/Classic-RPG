@@ -4,9 +4,16 @@ fonts = ["6x9", "banner", "big", "block", "bubble", "chartr", "chartri", "cour",
 
 
 
-def start(gameTitle):
+def start(filename):
+    gameTitle = ""
+    print(filename)
     font_idx = random.randint(0, len(fonts) - 1)
     f = Figlet(font=fonts[font_idx])
+    if(filename.find('/')!=-1):
+        gameTitle = filename[filename.find('/')+1:-3]
+    else:
+        gameTitle = filename[:-3]
+
     print(f.renderText(gameTitle))
 
     while True:
