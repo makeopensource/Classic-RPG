@@ -9,8 +9,7 @@
 
 `python3 -m pip install -r requirements.txt`
 
-`python3 game-2.py`
-
+`python3 classicRGP.py`
 
 # Configuration
 

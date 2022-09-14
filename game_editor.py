@@ -2,7 +2,7 @@ from array import *
 from crpg import generate
 from crpg import Game
 
-#Altered for purpose fromfrom : https://www.codecademy.com/learn/learn-data-structures-and-algorithms-with-python/modules/nodes/cheatsheet
+#Altered for purpose from : https://www.codecademy.com/learn/learn-data-structures-and-algorithms-with-python/modules/nodes/cheatsheet
 class gameMap:
     def __init__(self, value, type, name, pathType, previous_node=None):
         self.value = value
@@ -48,12 +48,12 @@ def find(array , val):
             return pos
     return -1
 
-#Calling function
+
 def addNode(array, parent, target, pType, newVal):
     branch = findNode(parent, target)
-    nodeAddHelp(array, branch, target, pType, newVal)
+    nodeAddHelp(array, branch, pType, newVal)
 
-def nodeAddHelp(array, parent, target, pType, newVal):
+def nodeAddHelp(array, parent, pType, newVal):
     pos = find(ar ,newVal )
     newNode = gameMap(newVal,array[pos][1],array[pos][2], pType)
     newNode.set_previous_node(parent)
@@ -112,6 +112,27 @@ def printMap(parent):
         print() # Print new line between two levels
 
 
+def printFileDir(root):
+    if (root == None or root.get_next_node() == set()):
+        return
+    else:
+         printFileDirHelp(0, root)
+
+
+def printFileDirHelp(depth, root):
+    point = "\033["+str(91+depth)+"m {}\033[00m" .format("o")
+    if (not(root == None or root.get_next_node() == set())):
+        print((isRoot(depth)*'|')+((depth)*' ')+point+root.get_name())
+        for node in root.get_next_node():
+            printFileDirHelp(depth+1,node)
+    else:
+        print((isRoot(depth)*'|')+(depth*' ')+point+root.get_name())
+
+def isRoot(num):
+    if(num>0):
+        return 1
+    return 0
+
 
 with open("game_libary/game-2-layout.dl",'r') as f:
     nodes = []
@@ -137,7 +158,7 @@ with open("game_libary/game-2-layout.dl",'r') as f:
         commands = con.split()
         addNode(ar ,base , commands[0],commands[1],commands[2])
         
-    printMap(base)
+    #printMap(base)
 
-
+    printFileDir(base)
 
