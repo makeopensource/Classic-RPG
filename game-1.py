@@ -33,14 +33,14 @@ game.add_node(run_dragon)
 
 # connections
 game.add_twoway_connection(starting_location, examine_skeleton)
-game.add_oneway_connection(starting_location, open_cell_gate)
-game.add_oneway_connection(open_cell_gate, courtyard)
-game.add_oneway_connection(open_cell_gate, dungeon)
-game.add_oneway_connection(courtyard, dragon_event)
-game.add_oneway_connection(dragon_event, fight_dragon)
-game.add_oneway_connection(dragon_event, run_dragon)
+game.add_connection(starting_location, open_cell_gate)
+game.add_connection(open_cell_gate, courtyard)
+game.add_connection(open_cell_gate, dungeon)
+game.add_connection(courtyard, dragon_event)
+game.add_connection(dragon_event, fight_dragon)
+game.add_connection(dragon_event, run_dragon)
 
-game.add_oneway_connection(fight_dragon, courtyard)
-game.add_oneway_connection(run_dragon, courtyard)
+game.add_connection(fight_dragon, courtyard)
+game.add_connection(run_dragon, courtyard)
 
 game.start()

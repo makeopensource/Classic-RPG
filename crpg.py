@@ -2,15 +2,14 @@ from typing import Callable # for connection function type hints
 from setup import start
 import re
 from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
-
 # the base crpg game
 
 class Game:
-    def __init__(self, player: Player = Player(), starting_location: Location = None):
+    def __init__(self, gameTitle,  player: Player = Player(), starting_location: Location = None):
         self.current: Node = starting_location
         self.player = player
         self.name: str = None
-
+        self.gameTitle = gameTitle
         self.nodes: set[Node] = set()
         
         self.add_node(self.current)
@@ -58,11 +57,10 @@ class Game:
                 break
             else:
                 print('Please enter a valid number. Try again.')
-
         self.current = self.current.advance(choice - 1)
 
     def start(self):
-        self.name = start()
+        self.name = start(self.gameTitle)
         print(f'Welcome, {self.name}')
 
         while self.player.hp > 0:
@@ -75,8 +73,7 @@ def generate(filename):
     with open(filename, "r") as f:
         contents = f.read()
         nodes, connections = contents.split("\n---\n", maxsplit=1)
-
-        game = Game()
+        game = Game(filename)
 
         node_mapping: dict[str, Node] = {}
         n_types = {
