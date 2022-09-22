@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Classic RPG
 
 ### Prerequisites
@@ -39,3 +40,7 @@ for parsing. One I was thinking about is `\->`, which would denote an
 
 
 
+=======
+# Classic-RPG
+A classic role playing game with homemade engine.
+>>>>>>> aae258a (Initial commit)
