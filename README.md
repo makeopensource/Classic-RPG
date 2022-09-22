@@ -37,5 +37,24 @@ If we want to expand the API for connections, we can always add more symbols
 for parsing. One I was thinking about is `\->`, which would denote an
 "ending" connection (to signal destroying the path to reach the current action)
 
+# Game Objects
 
+To implement game objects, you need to:
 
+1) Know the attributes of your object (duh)
+
+2) Go to **builtin.py** -> **Obj** and find **Obj** class. This is where you initialize the object. **NOTE:** You don't assume the player is going to use an object. This is merely initialization. Tip: Initialize the logic of your object here. 
+
+3) The hard part is done - go nuts and build your own class definition.
+
+4) Do not forget to go to **crpg.py** -> **generate()** iff you are:
+    - creating a new object type. 
+        - go to the first for loop and look for the first if statement. 
+        - remember to include your new object type in n_types
+
+Objects we currenlty have:
+-Money. Encoded in a .dl file as 
+> id | currency | amount_as_an_integer | Description
+> potion | pohealth | Description
+New potions should be encoded like this: <"po"type>
+- for example, pohealth, pohp, pomagic
