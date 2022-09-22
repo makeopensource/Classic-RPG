@@ -37,9 +37,7 @@ If we want to expand the API for connections, we can always add more symbols
 for parsing. One I was thinking about is `\->`, which would denote an
 "ending" connection (to signal destroying the path to reach the current action)
 
-# Game Objects
 
-To implement game objects, you need to:
 
 1) Know the attributes of your object (duh)
 
