@@ -15,3 +15,9 @@ null/
 out/
 target/
 .bsp/
+
+# MacOS
+/.DS_Store
+
+# Windows
+/Thumbs.db
