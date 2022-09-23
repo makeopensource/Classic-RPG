@@ -1,18 +1,20 @@
-from typing import Callable # for connection function type hints
+from typing import Callable  # for connection function type hints
 from setup import start
 import re
-from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
+from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player, Action
+
 
 # the base crpg game
 
 class Game:
     def __init__(self, player: Player = Player(), starting_location: Location = None):
+        self.name = start()
         self.current: Node = starting_location
         self.player = player
-        self.name: str = None
+        self.name: str
 
         self.nodes: set[Node] = set()
-        
+
         self.add_node(self.current)
 
     # establish nodes and connections
@@ -25,7 +27,8 @@ class Game:
 
         from_node.add_connection(to_node, connection_type)
 
-    def add_twoway_connection(self, node_a: Node, node_b: Node, connection_type_a: Connection = Connection, connection_type_b: Connection = Connection):
+    def add_twoway_connection(self, node_a: Node, node_b: Node, connection_type_a: Connection = Connection,
+                              connection_type_b: Connection = Connection):
         assert node_a in self.nodes
         assert node_b in self.nodes
 
@@ -36,7 +39,7 @@ class Game:
     def list_next(self):
         _next = self.current.connections
         for i, connection in enumerate(_next):
-            print(f'{i+1}) {connection.to_node}')
+            print(f'{i + 1}) {connection.to_node}')
 
     # Iterate through graph, ask for choices at each node
     def ask(self, query: str):
@@ -51,10 +54,10 @@ class Game:
                 choice = int(input(f'{query}'))
             except ValueError:
                 print('Please enter a number. Try again.')
-                continue 
+                continue
 
-            # check for valid choice
-            if (choice <= len(_next) and choice > 0):
+                # check for valid choice
+            if len(_next) >= choice > 0:
                 break
             else:
                 print('Please enter a valid number. Try again.')
@@ -62,7 +65,6 @@ class Game:
         self.current = self.current.advance(choice - 1)
 
     def start(self):
-        self.name = start()
         print(f'Welcome, {self.name}')
 
         while self.player.hp > 0:
@@ -81,7 +83,7 @@ def generate(filename):
         node_mapping: dict[str, Node] = {}
         n_types = {
             "starting": Location,
-            "node": Node,
+            "node": Action,
             "location": Location,
             "fight": Fight,
             "run": Run
@@ -89,11 +91,13 @@ def generate(filename):
 
         c_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
             "->": lambda game, node_a, node_b: game.add_connection(node_a, node_b),
-            "\->": lambda game, node_a, node_b: game.add_connection(node_a, node_b, BreakingConnection),
+            "\\->": lambda game, node_a, node_b: game.add_connection(node_a, node_b, BreakingConnection),
             "<->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b),
-            "<-\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection),
-            "<-/->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, Connection, BreakingConnection),
-            "<-/\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection, BreakingConnection),
+            "<-\\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection),
+            "<-/->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, Connection,
+                                                                             BreakingConnection),
+            "<-/\\->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b, BreakingConnection,
+                                                                               BreakingConnection),
         }
 
         for node in nodes.split("\n"):
@@ -102,7 +106,11 @@ def generate(filename):
             if n_type == "fight" or n_type == "run":
                 args.append(game.player)
 
+            if n_type == "node":
+                args.append(game.player)
+
             obj = n_types[n_type](*args)
+            # print(obj)
             if n_type == "starting":
                 game.current = obj
 
