@@ -59,39 +59,23 @@ class Node:
     def __str__(self):
         return self.title
 
-class Obj(Node):
+#To initialize another potion type, create another if statement in init. Define what happens on select in on_select. 
+class Potion(Node):
     def __init__(self, title:str, desc:str, player:Player):
         super().__init__(title, desc)
         self.desc = desc
         self.player = player
-        if title.isnumeric(): #initializing money
-            self.amount_Money = int(title)
-        elif title[:2] == "po": #if first 2 characters are po then its a potion
-            if title[2:] == "health":
-                self.amount_Hp = 25
-                self.potionType = "Health potion"
-
-class Potion(Obj):
+        if "-health-collect" in title:
+            self.amount_health = int(title[19:21])
+            self.potionType = "Health potion"
     def on_select(self):
-        if self in self.player.bag:
-            if self.amount_Hp:
-                self.player.hp += self.amount_Hp
-                self.player.bag.remove(self)
-        else:
-            self.player.bag.append(self)
+        self.player.bag.append(self)
         for i in self.player.bag:
             print(i.potionType)
-
-class Currency(Obj):
-    def on_select(self):
-        self.player.money += self.amount_Money
-        print(self.player.summary())
-
 
 # Location behaves exactly like a Node
 class Location(Node):
     pass
-
 
 # Actions include the player for reference (augment player attributes)
 class Action(Node):

@@ -1,7 +1,7 @@
 from typing import Callable # for connection function type hints
 from setup import start
 import re
-from builtin import Connection, Currency,Potion, BreakingConnection, Node, Location, Fight, Run, Player
+from builtin import Connection, Potion, BreakingConnection, Node, Location, Fight, Run, Player
 
 # the base crpg game
 
@@ -86,7 +86,6 @@ def generate(filename):
             "fight": Fight,
             "run": Run,
             "potion" : Potion,
-            "currency" : Currency
         }
 
         c_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
@@ -101,7 +100,7 @@ def generate(filename):
         for node in nodes.split("\n"):
             n, n_type, *args = re.split(r"\s*\|\s*", node)
 
-            if n_type == "fight" or n_type == "run" or n_type[:2] == "po" or n_type == "currency":
+            if n_type == "fight" or n_type == "run" or n_type[:2] == "po":
                 args.append(game.player)
 
             obj = n_types[n_type](*args)
