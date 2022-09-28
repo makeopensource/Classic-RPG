@@ -1,23 +1,23 @@
 # Visual Studio Code
-.vscode/
+**/.vscode/
 
 # Python
-__pycache__/
-*.pyc
-venv/
-ENV/
-env/
-build/
+**/__pycache__/
+**/*.pyc
+**/venv/
+**/ENV/
+**/env/
+**/build/
 
 # JetBrains
-.idea/
-null/
-out/
-target/
-.bsp/
+**/.idea/
+**/null/
+**/out/
+**/target/
+**/.bsp/
 
 # MacOS
-/.DS_Store
+**/.DS_Store
 
 # Windows
-/Thumbs.db
+**/Thumbs.db
