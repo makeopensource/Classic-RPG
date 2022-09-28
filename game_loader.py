@@ -10,25 +10,25 @@ from crpg import generate
 from functools import reduce
 from os.path import exists
 
-#Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path for .dl
+#Allows adding specifications when starting program; at the moment, only add the ability to specify exact file path for .dl
 @click.command()
-@click.option("--path", default="game_libary", help="Provide file path to a .dl file not located under /game_libary")
+@click.option("--path", default="game_library", help="Provide file path to a .dl file not located under /game_library")
 def start(path):
     #Possible could be more elegant, checks if user specified path; if path exist runs it
-    if(path == "game_libary"):
+    if(path == "game_library"):
         dl = selectDL(path)
     else:
-        defualtChosen=False
-        while((not exists(path)) and (not defualtChosen)):
+        defaultChosen=False
+        while((not exists(path)) and (not defaultChosen)):
             print("Could not locate file, either try again(0) or run default(1)")
             userIn = getUserInput(2)
             if(userIn == "1"):
-                defualtChosen=True
+                defaultChosen=True
             else:
                 print("Enter file Path")
                 path = str(input())    
-        if(defualtChosen):
-            path = "game_libary"
+        if(defaultChosen):
+            path = "game_library"
             dl = selectDL(path)
         else:
             dl = path
@@ -40,9 +40,9 @@ def start(path):
         print("Exiting")
         exit(0)
 
-#Read all dl files located in GameLibary, lists them to user, and return level chosen by user to game generate
+#Read all dl files located in GameLibrary, lists them to user, and return level chosen by user to game generate
 
-#Prints all files in given path, and passes seeted file path
+#Prints all files in given path, and passes selected file path
 def selectDL(path):
     bannerPrinter()
     dir_list = os.listdir(path)
@@ -71,15 +71,15 @@ def bannerPrinter():
         print("*" * 100 + "\n")
         
 #check user input is valid        
-def inputCheck(value , lenght):
+def inputCheck(value , length):
     if(value.isnumeric()):
-        return not ((-1 < int(value) ) and (int(value)<lenght+1))
+        return not ((-1 < int(value) ) and (int(value)<length+1))
     else:
         return True
-#Handles aceeting user input and checking it is valid
-def getUserInput( lenght):
+#Handles accepting user input and checking it is valid
+def getUserInput( length):
     userIn = str(input())
-    while inputCheck(userIn , lenght):
+    while inputCheck(userIn , length):
         print("Please choose from the following options\n"+'_'*45)
         print(options)
         userIn = str(input())

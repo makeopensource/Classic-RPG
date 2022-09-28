@@ -10,16 +10,16 @@ from crpg import generate
 from functools import reduce
 from os.path import exists
 
-GAMELIBARY = "game_libary"
+GAME_LIBRARY = "game_library"
 
-#Allows adding specifications when starting program; at the moment, only add the abitly to specify exact file path or folder for .dl
+#Allows adding specifications when starting program; at the moment, only add the ability to specify exact file path or folder for .dl
 @click.command()
-@click.option("--path", default= None, help="Provide file path to a .dl file not located under /game_libary")
+@click.option("--path", default= None, help="Provide file path to a .dl file not located under /game_library")
 @click.option("--folder", default=None, help="Provide folder to list of .dl files, --path Take priority")
 def start(path, folder):
     #Checks if user specified a .dl file or folder and access it, otherwise gives default game options
     if((folder == None) and (path == None)):
-        runDefualt()
+        runDefault()
 
     elif( (path != None) ):
         letUserSelectFile(path)
@@ -28,12 +28,12 @@ def start(path, folder):
         letUserSelectFolder(folder)
     
 def letUserSelectFile(path):
-    defualtChosen=False
-    while((not exists(path)) and (not defualtChosen)):
+    defaultChosen=False
+    while((not exists(path)) and (not defaultChosen)):
         print("Could not locate file, either try again(0) or run default(1)")
         userIn = getUserInput(2,"Could not locate file, either try again(0) or run default(1)")
         if(userIn == "1"):
-            defualtChosen=True
+            defaultChosen=True
         else:
             print("Enter file Path")
             path = str(input())    
@@ -42,15 +42,15 @@ def letUserSelectFile(path):
         game = generate(path)
         game.start()
     else:
-        runDefualt()
+        runDefault()
 
 def letUserSelectFolder(folder):
-    defualtChosen=False
-    while((not exists(folder)) and (not defualtChosen)):
+    defaultChosen=False
+    while((not exists(folder)) and (not defaultChosen)):
         print("Could not locate folder, either try again(0) or run default(1)")
         userIn = getUserInput(2,"Could not locate folder, either try again(0) or run default(1)")
         if(userIn == "1"):
-            defualtChosen=True
+            defaultChosen=True
         else:
             print("Enter folder Path")
             folder = str(input())    
@@ -59,10 +59,10 @@ def letUserSelectFolder(folder):
         game = generate(selectDL(folder))
         game.start()
     else:
-        runDefualt()
+        runDefault()
 
-def runDefualt():
-    game = generate(selectDL(GAMELIBARY))
+def runDefault():
+    game = generate(selectDL(GAME_LIBRARY))
     game.start()
 
 #Prints all files in given path, and passes user selected file path back
@@ -94,15 +94,15 @@ def bannerPrinter():
         print("*" * 100 + "\n")
         
 #check user input is valid        
-def inputCheck(value , lenght):
+def inputCheck(value , length):
     if(value.isnumeric()):
-        return not ((-1 < int(value) ) and (int(value)<lenght+1))
+        return not ((-1 < int(value) ) and (int(value)<length+1))
     else:
         return True
-#Handles aceeting user input and checking it is valid
-def getUserInput(lenght , options):
+#Handles accepting user input and checking it is valid
+def getUserInput(length , options):
     userIn = str(input())
-    while inputCheck(userIn , lenght):
+    while inputCheck(userIn , length):
         print("Please choose from the following options\n"+'_'*45)
         print(options)
         userIn = str(input())

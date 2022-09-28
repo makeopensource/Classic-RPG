@@ -17,7 +17,7 @@ def start(filename):
     print(f.renderText(gameTitle))
 
     while True:
-        print("Greetings traveller, what is your name?")
+        print("Greetings traveler, what is your name?")
         name = input("> ")
 
         print("Are you ready to begin your quest? (Y/n)")
