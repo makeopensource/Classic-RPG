@@ -1,19 +1,19 @@
 # Python
-<<<<<<< HEAD
-**/__pycache__/
-**/*.pyc
-**/venv/
-**/ENV/
-**/env/
-**/build/
+
+/__pycache__
+/*.pyc
+/venv/
+/ENV/
+/env/
+/build/
 
 # JetBrains
-**/null/
-**/out/
-**/target/
+/null/
+/out/
+/target/
 
 # Windows
-**/Thumbs.db
+/Thumbs.db
 
 # Hidden Files and Exceptions
 **/.*
@@ -36,6 +36,5 @@ target/
 
 #dev
 LICENSE
-.github/
+.github
 game-2-layout.dl
->>>>>>> 76d2d31 (gitignore)
