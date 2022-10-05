@@ -65,13 +65,30 @@ class Potion(Node):
         super().__init__(title, desc)
         self.desc = desc
         self.player = player
-        if "-health-collect" in title:
-            self.amount_health = int(title[19:21])
-            self.potionType = "Health potion"
+        if "health" in title:
+            Health.init_health(self,title)
+        if "speed" in title:
+            Speed.init_speed(self,title)
+
     def on_select(self):
         self.player.bag.append(self)
-        for i in self.player.bag:
-            print(i.potionType)
+        showBag(self)
+
+class Health():
+    def init_health(self,title):
+        self.amount_health = int(title[23:25])
+        if "potion" in title:
+            self.objectType = "Health Potion"
+        self.category = "Health"
+        self.title = self.objectType + " " + str(self.amount_health )+ " awarded"
+
+class Speed():
+    def init_speed(self,title):
+        self.amount_speed= int(title[23:25])
+        if "potion" in title:
+            self.objectType = "Speed Potion"
+        self.category = "Health"
+        self.title = self.objectType + " " + str(self.amount_speed )+ " awarded"
 
 # Location behaves exactly like a Node
 class Location(Node):
@@ -100,3 +117,15 @@ class Run(Action):
         self.player.xp = max(self.player.xp - 10, 0)
 
         super().on_select()
+
+def showBag(self):
+    objTypeToCount = {}
+    for obj in self.player.bag:
+        if obj.objectType not in objTypeToCount:
+            objTypeToCount[obj.objectType]=1
+        else:
+            objTypeToCount[obj.objectType]+=1
+    print()
+    print("Inventory")
+    print(objTypeToCount)
+    print()

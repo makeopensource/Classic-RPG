@@ -100,7 +100,7 @@ def generate(filename):
         for node in nodes.split("\n"):
             n, n_type, *args = re.split(r"\s*\|\s*", node)
 
-            if n_type == "fight" or n_type == "run" or n_type[:2] == "po":
+            if n_type == "fight" or n_type == "run" or n_type == "potion":
                 args.append(game.player)
 
             obj = n_types[n_type](*args)
