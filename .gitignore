@@ -1,17 +1,20 @@
-# Visual Studio Code
-.vscode/
-
 # Python
-__pycache__/
-*.pyc
-venv/
-ENV/
-env/
-build/
+**/__pycache__/
+**/*.pyc
+**/venv/
+**/ENV/
+**/env/
+**/build/
 
 # JetBrains
-.idea/
-null/
-out/
-target/
-.bsp/
+**/null/
+**/out/
+**/target/
+
+# Windows
+**/Thumbs.db
+
+# Hidden Files and Exceptions
+**/.*
+!.github
+!.gitignore
