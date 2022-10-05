@@ -2,9 +2,11 @@
 2 | node | examine skeleton | You examine the skeleton of a corpse.
 3 | potion | potion-health-collect-[25] | Pick up potion
 4 | node | left corridor | The corridor leads to an open door to the castle's courtyard.
+5 | potion | potion-speed-collect-[25] | Pick up speed
 ---
 1 <-> 3
 1 -> 2
 2 -> 4
+4 <-> 5
 
 

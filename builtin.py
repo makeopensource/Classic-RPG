@@ -76,18 +76,18 @@ class Potion(Node):
 
 class Health():
     def init_health(self,title):
-        self.amount_health = int(title[23:25])
+        self.amount_health = extract_number(title)
         if "potion" in title:
             self.objectType = "Health Potion"
         self.category = "Health"
-        self.title = self.objectType + " " + str(self.amount_health )+ " awarded"
+        self.title = self.objectType + " " + str(self.amount_health)+ " awarded"
 
 class Speed():
     def init_speed(self,title):
-        self.amount_speed= int(title[23:25])
+        self.amount_speed = extract_number(title)
         if "potion" in title:
             self.objectType = "Speed Potion"
-        self.category = "Health"
+        self.category = "Speed"
         self.title = self.objectType + " " + str(self.amount_speed )+ " awarded"
 
 # Location behaves exactly like a Node
@@ -129,3 +129,19 @@ def showBag(self):
     print("Inventory")
     print(objTypeToCount)
     print()
+
+def extract_number(title):
+    c = 0
+    h,t = 0,0
+    ret = 0
+    while c < len(title):
+        if title[c] == "[":
+            h = c 
+            while c < len(title):
+                if title[c] == "]":
+                    t = c
+                    ret = int(title[h+1:t])
+                    break
+                c += 1
+        c += 1
+    return ret
