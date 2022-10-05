@@ -5,10 +5,11 @@ class Player:
     def __init__(self):
         self.hp = 100
         self.xp = 0
+        self.bag = []
+        self.money = 0
 
     def summary(self):
-        return f'hp: {self.hp} xp: {self.xp}'
-
+        return f'hp: {self.hp} xp: {self.xp} money: {self.money}'
 
 # Base connection classes
 
@@ -58,11 +59,40 @@ class Node:
     def __str__(self):
         return self.title
 
+#To initialize another potion type, create another if statement in init. Define what happens on select in on_select. 
+class Potion(Node):
+    def __init__(self, title:str, desc:str, player:Player):
+        super().__init__(title, desc)
+        self.desc = desc
+        self.player = player
+        if "health" in title:
+            Health.init_health(self,title)
+        if "speed" in title:
+            Speed.init_speed(self,title)
+
+    def on_select(self):
+        self.player.bag.append(self)
+        showBag(self)
+
+class Health():
+    def init_health(self,title):
+        self.amount_health = extract_number(title)
+        if "potion" in title:
+            self.objectType = "Health Potion"
+        self.category = "Health"
+        self.title = self.objectType + " " + str(self.amount_health)+ " awarded"
+
+class Speed():
+    def init_speed(self,title):
+        self.amount_speed = extract_number(title)
+        if "potion" in title:
+            self.objectType = "Speed Potion"
+        self.category = "Speed"
+        self.title = self.objectType + " " + str(self.amount_speed )+ " awarded"
 
 # Location behaves exactly like a Node
 class Location(Node):
     pass
-
 
 # Actions include the player for reference (augment player attributes)
 class Action(Node):
@@ -87,3 +117,31 @@ class Run(Action):
         self.player.xp = max(self.player.xp - 10, 0)
 
         super().on_select()
+
+def showBag(self):
+    objTypeToCount = {}
+    for obj in self.player.bag:
+        if obj.objectType not in objTypeToCount:
+            objTypeToCount[obj.objectType]=1
+        else:
+            objTypeToCount[obj.objectType]+=1
+    print()
+    print("Inventory")
+    print(objTypeToCount)
+    print()
+
+def extract_number(title):
+    c = 0
+    h,t = 0,0
+    ret = 0
+    while c < len(title):
+        if title[c] == "[":
+            h = c 
+            while c < len(title):
+                if title[c] == "]":
+                    t = c
+                    ret = int(title[h+1:t])
+                    break
+                c += 1
+        c += 1
+    return ret

@@ -1,20 +1,40 @@
 # Python
-**/__pycache__/
-**/*.pyc
-**/venv/
-**/ENV/
-**/env/
-**/build/
+
+/__pycache__
+/*.pyc
+/venv/
+/ENV/
+/env/
+/build/
 
 # JetBrains
-**/null/
-**/out/
-**/target/
+/null/
+/out/
+/target/
 
 # Windows
-**/Thumbs.db
+/Thumbs.db
 
 # Hidden Files and Exceptions
 **/.*
 !.github
 !.gitignore
+=======
+/__pycache__
+*.pyc
+venv/
+ENV/
+env/
+build/
+
+# JetBrains
+.idea/
+null/
+out/
+target/
+.bsp/
+
+#dev
+LICENSE
+.github
+game-2-layout.dl
