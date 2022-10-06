@@ -1,11 +1,11 @@
 from crpg import Game
-from typing import Callable # for connection function type hints
+from typing import Callable, Any # for connection function type hints
 import re
 from builtin import Connection, BreakingConnection, Node, Location
 
 
 # connection function mapping
-conn_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
+connection_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
     "->": lambda game, node_a, node_b: game.add_connection(node_a, node_b),
     "\\->": lambda game, node_a, node_b: game.add_connection(node_a, node_b, BreakingConnection),
     "<->": lambda game, node_a, node_b: game.add_twoway_connection(node_a, node_b),
@@ -18,15 +18,15 @@ conn_funcs: dict[str, Callable[[Game, Node, Node], None]] = {
 node_types = {
     "starting": Location,
     "node": Node,
-    "location": Location,
+    "location": Location
 }
 
 # check if an attr is a number
-def is_number(attr):
+def is_number(attr) -> bool:
     return attr[0] == "+" or attr[0] == "-"
 
 # convert an attr into a number (assumes is_number)
-def to_number(attr):
+def to_number(attr) -> int:
     try:
         n = int(attr[1:])
     except:
@@ -38,12 +38,17 @@ def to_number(attr):
 
 
 # parse each node chunk into relevant pieces
-def parse_node(chunk):
-    split_chunk = chunk.split("\n")
+def parse_node(chunk) -> tuple[str, str, dict[str, Any]]:
+    split_chunk: list[str] = chunk.split("\n")
     header, attrs = split_chunk[0], split_chunk[1:]
 
-    alias, n_name = re.split(r"\s*\|\s*", header, maxsplit=1) 
-    attr_map = {}
+    node_info = re.split(r"\s*\|\s*", header, maxsplit=1)
+    if len(node_info) != 2:
+        raise ValueError("Each node must include a \"node id\" and \"node name\"")
+
+    node_id: str = node_info[0]
+    node_name: str = node_info[1]
+    attr_map: dict[str, Any] = {}
    
     # parse attributes into mapping
     for attr in attrs:
@@ -53,32 +58,32 @@ def parse_node(chunk):
 
         attr_map[attr_name] = attr_val
 
-    return alias, n_name, attr_map
+    return (node_id, node_name, attr_map)
 
 
-def parse_connection(chunk):
+def parse_connection(chunk) -> tuple[str, str, str]:
     connection = re.match(r"^\s*(\d+)\s+([^\s]+)\s+(\d+)\s*$", chunk, re.MULTILINE)
 
     if connection is None or '' in connection.groups():
-        raise ConnectionError("Invalid .dl connection input")
+        raise ConnectionError("Invalid .dl connectionection input")
 
     return connection.group(1, 2, 3)
 
 
 # setup nodes for game
-def node_setup(nodes, game):
+def node_setup(nodes, game) -> dict[str, Node]:
     node_mapping: dict[str, Node] = {}
 
     for node in nodes:
         # split data for each node
-        alias, node_name, attr_map = parse_node(node)
+        node_id, node_name, attr_map = parse_node(node)
 
         # retrieve the node type
-        node_type = attr_map["node_type"]
+        node_type: str = str(attr_map["node_type"])
 
         # generate the appropriate node object
         # attributes MUST be compliant with kwarg-syntax 
-        obj = node_types[node_type](node_name, **attr_map)
+        obj: Node = node_types[node_type](node_name, **attr_map)
 
         if node_type == "starting":
             game.current = obj
@@ -87,30 +92,30 @@ def node_setup(nodes, game):
         game.add_node(obj)
 
         # generate the nodes
-        node_mapping[alias] = obj
+        node_mapping[node_id] = obj
 
     return node_mapping
 
 
-# setup connections for game
-def connection_setup(conn, node_mapping, game):
-    for raw_conn in conn:
-        node_a, n_conn, node_b = parse_connection(raw_conn)
+# setup connectionections for game
+def connection_setup(connection, node_mapping, game):
+    for raw_connection in connection:
+        node_a_id, node_connection, node_b_id = parse_connection(raw_connection)
 
-        node_a = node_mapping[node_a]
-        node_b = node_mapping[node_b]
+        node_a = node_mapping[node_a_id]
+        node_b = node_mapping[node_b_id]
 
-        conn_func = conn_funcs.get(n_conn, None)
-        if not conn_func:
-            raise ConnectionError("Invalid .dl connection input")
+        connection_func = connection_funcs.get(node_connection, None)
+        if not connection_func:
+            raise ConnectionError("Invalid .dl connectionection input")
 
-        conn_func(game, node_a, node_b)
+        connection_func(game, node_a, node_b)
 
 
-# setup game with nodes and connections
-def setup(nodes, conn, game):
+# setup game with nodes and connectionections
+def setup(nodes, connection, game):
     node_mapping: dict[str, Node] = node_setup(nodes, game)
-    connection_setup(conn, node_mapping, game)
+    connection_setup(connection, node_mapping, game)
 
 
 def generate(filename):
@@ -118,14 +123,14 @@ def generate(filename):
         contents = f.read()
 
     try:
-        meta, nodes, conn = re.split(r"\n+---\n+", contents, re.DOTALL)
+        meta, nodes, connection = re.split(r"\n+---\n+", contents, re.DOTALL)
     except:
         raise ValueError("Please separate each section with \"---\"")
 
     meta = re.split("\n*", meta)
     nodes = re.split("\n\n+", nodes)
-    conn = [x for x in re.split("\n+", conn) if x != '']
+    connection = [x for x in re.split("\n+", connection) if x != '']
     game = Game()
-    setup(nodes, conn, game)
+    setup(nodes, connection, game)
     
     return game

@@ -9,15 +9,11 @@ class Game:
         self.player: Player = player
         self.name: str
         self.nodes: set[Node] = set()
-        self.add_starter_node(starting)
+        self.add_node(starting)
  
     # establish nodes and connections
     def add_node(self, node: Node):
         self.nodes.add(node)
-
-    def add_starter_node(self, node: Node):
-        self.add_node(node)
-        self.current = node
 
     def add_connection(self, 
         from_node: Node, 

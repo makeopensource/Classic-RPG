@@ -4,7 +4,7 @@ import re
 from builtin import Connection, BreakingConnection, Node, Location 
 
 
-n_types = {
+node_types = {
     "starting": Location,
     "node": Node,
     "location": Location,
@@ -34,13 +34,13 @@ def parse_nodes(chunks, game):
     node_mapping: dict[str, Node] = {}
     starting: Location = Location("Castle")
     for chunk in chunks.split("\n"):
-        n_alias, n_type, title, args = re.split(r"\s*\|\s*", chunk)
+        node_id, node_type, title, args = re.split(r"\s*\|\s*", chunk)
         kwargs = args_to_kwargs(args) 
-        obj = n_types[n_type](title, **kwargs)
-        if n_type == "starting":
+        obj = node_types[node_type](title, **kwargs)
+        if node_type == "starting":
             starting = obj
 
-        node_mapping[n_alias] = obj
+        node_mapping[node_id] = obj
         game.add_node(obj)
 
     return starting, node_mapping
@@ -63,7 +63,7 @@ def parse_connections(chunks, node_mapping, game):
         connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)\s*$", connection, re.MULTILINE)
 
         if connection is None or '' in connection.groups():
-            raise ConnectionError("Invalid .dl connection input")
+            raise ConnectionError("Invalid .dl connectionection input")
 
         node_a = node_mapping[connection.group(1)]
         node_b = node_mapping[connection.group(3)]
@@ -72,14 +72,13 @@ def parse_connections(chunks, node_mapping, game):
         if c_func is not None:
             c_func(game, node_a, node_b)
         else:
-            raise ConnectionError("Invalid .dl connection input")
+            raise ConnectionError("Invalid .dl connectionection input")
 
 
 def generate(filename):
     with open(filename, "r") as f:
         contents = f.read()
-        nodes, connections = contents.split("\n+---\n+", maxsplit=1) 
-
+        nodes, connections = re.split(r"\n+---\n+", contents, maxsplit=1) 
         game = Game()
         starting, node_mapping = parse_nodes(nodes, game)
         game.current = starting

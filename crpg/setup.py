@@ -7,12 +7,13 @@ fonts = ["6x9", "banner", "big", "block", "bubble", "chartr", "chartri", "cour",
         "script", "shadow", "slant", "small", "smscript", "smshadow", "smslant",
         "standard", "term", "times", "xchartr"]
 
+
 def start():
     font_idx = random.randint(0, len(fonts) - 1)
     f = Figlet(font=fonts[font_idx])
     print(f.renderText('Classic RPG'))
 
-    while True: 
+    while True:
         print("Greetings traveller, what is your name?")
         name = input("> ")
 
