@@ -47,7 +47,6 @@ def parse_nodes(chunks, game):
 
 
 def args_to_kwargs(args):
-    print(args)
     if type(args) == str:
         args = [args]
     if len(args) > len(builtin_args):
