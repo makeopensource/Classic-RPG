@@ -62,7 +62,7 @@ def parse_connections(chunks, node_mapping, game):
         connection = re.match(r"^(\d*)\s*([^\s]*)\s*(\d*)\s*$", connection, re.MULTILINE)
 
         if connection is None or '' in connection.groups():
-            raise ConnectionError("Invalid .dl connectionection input")
+            raise ConnectionError("Invalid .dl connection input")
 
         node_a = node_mapping[connection.group(1)]
         node_b = node_mapping[connection.group(3)]
@@ -71,7 +71,7 @@ def parse_connections(chunks, node_mapping, game):
         if c_func is not None:
             c_func(game, node_a, node_b)
         else:
-            raise ConnectionError("Invalid .dl connectionection input")
+            raise ConnectionError("Invalid .dl connection input")
 
 
 def generate(filename):

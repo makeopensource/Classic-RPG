@@ -65,7 +65,7 @@ def parse_connection(chunk) -> tuple[str, str, str]:
     connection = re.match(r"^\s*(\d+)\s+([^\s]+)\s+(\d+)\s*$", chunk, re.MULTILINE)
 
     if connection is None or '' in connection.groups():
-        raise ConnectionError("Invalid .dl connectionection input")
+        raise ConnectionError("Invalid .dl connection input")
 
     return connection.group(1, 2, 3)
 
@@ -97,7 +97,7 @@ def node_setup(nodes, game) -> dict[str, Node]:
     return node_mapping
 
 
-# setup connectionections for game
+# setup connections for game
 def connection_setup(connection, node_mapping, game):
     for raw_connection in connection:
         node_a_id, node_connection, node_b_id = parse_connection(raw_connection)
@@ -107,12 +107,12 @@ def connection_setup(connection, node_mapping, game):
 
         connection_func = connection_funcs.get(node_connection, None)
         if not connection_func:
-            raise ConnectionError("Invalid .dl connectionection input")
+            raise ConnectionError("Invalid .dl connection input")
 
         connection_func(game, node_a, node_b)
 
 
-# setup game with nodes and connectionections
+# setup game with nodes and connections
 def setup(nodes, connection, game):
     node_mapping: dict[str, Node] = node_setup(nodes, game)
     connection_setup(connection, node_mapping, game)

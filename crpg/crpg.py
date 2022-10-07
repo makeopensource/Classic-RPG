@@ -18,12 +18,12 @@ class Game:
     def add_connection(self, 
         from_node: Node, 
         to_node: Node,
-        conn_type: type = Connection
+        connection_type: type = Connection
     ):
         assert from_node in self.nodes
         assert to_node in self.nodes
 
-        from_node.add_connection(to_node, conn_type)
+        from_node.add_connection(to_node, connection_type)
 
     def add_twoway_connection(self, 
         node_a: Node, 
