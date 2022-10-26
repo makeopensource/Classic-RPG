@@ -6,7 +6,7 @@ import os
 import textwrap
 import click
 from pyfiglet import Figlet
-from crpg import generate
+from crgp import generate
 from functools import reduce
 from os.path import exists
 
@@ -63,7 +63,7 @@ def selectDL(path):
 def bannerPrinter():
         print("*" * 100)
         f = Figlet(font = "roman")
-        print(f.renderText("Classic RPG"),end=' ')
+        print(f.renderText("Classic RGP"),end=' ')
         print("by".center(100))
         print("MakeOpenSource".center(100))
         print("University at Buffalo".center(100))

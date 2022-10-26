@@ -1,4 +1,4 @@
-from crpg import Game
+from crgp import Game
 from builtin import Player, Location, Action, Node, Fight, Run
 
 player = Player()
