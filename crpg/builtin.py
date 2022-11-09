@@ -1,4 +1,4 @@
-from __future__ import annotations #needed for Node type hints
+from __future__ import annotations # needed for Node type hints
 # Base player classes
 
 class Player:

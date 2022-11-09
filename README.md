@@ -37,5 +37,8 @@ If we want to expand the API for connections, we can always add more symbols
 for parsing. One I was thinking about is `\->`, which would denote an
 "ending" connection (to signal destroying the path to reach the current action)
 
+# Running Games
 
+1. Enter the repository: `cd Classic-RPG`
 
+2. Run a game: `python -m games.game-1`

@@ -1,7 +1,8 @@
-import sys
-sys.path.insert(0, "../crpg")
+import os
 
-import parser
+from crpg.parser import v1 as v1_parser
 
-game = parser.v1("game-2-layout.dl")
+
+filepath = os.path.abspath("games/game-2-layout.dl")
+game = v1_parser(filepath)
 game.start()

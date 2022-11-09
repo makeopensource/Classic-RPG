@@ -1,5 +1,5 @@
-from setup import start
-from builtin import Connection, Node, Location, Player
+from .setup import start
+from .builtin import Connection, Node, Location, Player
 
 # the base crpg game
 

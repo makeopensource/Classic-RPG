@@ -1,8 +1,5 @@
-import sys
-sys.path.insert(0, "../crpg")
-
-from crpg import Game
-from builtin import Location, Node
+from crpg.engine import Game
+from crpg.builtin import Location, Node
 
 starting_location = Location("castle")
 starting_location.add_attr(
