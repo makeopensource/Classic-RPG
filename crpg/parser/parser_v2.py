@@ -1,7 +1,8 @@
-from crpg import Game
 from typing import Callable, Any # for connection function type hints
 import re
-from builtin import Connection, BreakingConnection, Node, Location
+
+from crpg.engine import Game
+from crpg.builtin import Connection, BreakingConnection, Node, Location
 
 
 # connection function mapping
