@@ -2,7 +2,7 @@ from typing import Callable # for connection function type hints
 from setup import start
 import re
 from builtin import Connection, BreakingConnection, Node, Location, Fight, Run, Player
-# the base crpg game
+# the base crgp game
 
 class Game:
     def __init__(self, gameTitle,  player: Player = Player(), starting_location: Location = None):

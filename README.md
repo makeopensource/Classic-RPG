@@ -1,4 +1,4 @@
-# Classic RPG
+# Classic RGP
 
 ### Prerequisites
 
@@ -13,7 +13,7 @@
 
 # Configuration
 
-The crpg API is now configured via a filetype called a 
+The crgp API is now configured via a filetype called a 
 ".dl" file (dungeon layout). DLs have a very specific format
 that allow them to be parsed. 
 
